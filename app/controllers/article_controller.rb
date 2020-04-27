@@ -1,5 +1,5 @@
 class ArticleController < ApplicationController
-  CATEGORIES = ['notice'].freeze
+  CATEGORIES = %w[notice general].freeze
 
   def list
     category = params[:category]
@@ -8,10 +8,12 @@ class ArticleController < ApplicationController
   end
 
   def view
-    category = params[:category]
     article_id = params[:id]
-    @board_name = category
-    @article = Article.find article_id
-    logger.debug @article
+    begin
+      @article = Article.find article_id
+      @board_name = CATEGORIES[@article.category]
+    rescue ActiveRecord::RecordNotFound => e
+      redirect_to '/', flash: { alert: '잘못된 요청입니다' }
+    end
   end
 end

@@ -22,9 +22,13 @@ crumb :about do
   parent :root
 end
 
-crumb :notice do
-  link "공지", (url_for '/notice')
+crumb :article do
   parent :about
+  if current_page?('/notice')
+    link "공지", (url_for '/notice')
+  else
+    link "게시판", (url_for '/board')
+  end
 end
 
 crumb :donate do
