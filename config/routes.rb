@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root 'main#index'
   get 'index', to: 'main#index'
   get 'notice', to: 'article#list', category: 'notice'
+  get 'notice/:id', to: 'article#view', category: 'notice'
   get 'sign_in', to: 'user#sign_in_page'
   post 'sign_in', to: 'user#sign_in'
   get 'sign_up', to: 'user#sign_up_page'

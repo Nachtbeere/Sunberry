@@ -1,3 +1,3 @@
 class Article < ApplicationRecord
-  CATEGORIES = ['notice'].freeze
+  belongs_to :user
 end

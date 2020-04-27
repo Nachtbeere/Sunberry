@@ -10,133 +10,133 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
     <% unless current_page?("/") || current_page?("/index") || current_page?("/sign_up") || current_page?("/terms-of-service") || current_page?("/sign_in") %>
       <script data-name="BMC-Widget" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="noxowl" data-description="밤딸기 운영에 힘이 되도록 피자를 보내주세요!" data-message="오늘도 밤딸기에 방문해 주셔서 감사합니다." data-color="#FF813F" data-position="right" data-x_margin="18" data-y_margin="18"></script>
-    <%  end %>
+    <% end %>
   </head>
 
   <body>
   <header class="top-wrap uk-position-relative">
-      <div uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky">
-        <nav class="uk-navbar-container" uk-navbar>
-          <div class="uk-navbar-left">
-            <span class="site_logo"><%= link_to "밤딸기 플레이스", "/index" %></span>
-          </div>
-          <div class="uk-navbar-right">
-            <a class="uk-navbar-toggle uk-hidden@m" href="#" uk-toggle="target: #mobile_menu">
-              <span uk-navbar-toggle-icon></span> <span class="uk-margin-small-left">Menu</span>
-            </a>
-            <div id="mobile_menu" uk-offcanvas="mode: reveal; overlay: true; flip: true;">
-              <div class="uk-offcanvas-bar">
-                <button class="uk-offcanvas-close" type="button" uk-close></button>
-                <ul class="uk-nav uk-nav-default">
+    <div uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky">
+      <nav class="uk-navbar-container" uk-navbar>
+        <div class="uk-navbar-left">
+          <span class="site_logo"><%= link_to "밤딸기 플레이스", "/index" %></span>
+        </div>
+        <div class="uk-navbar-right">
+          <a class="uk-navbar-toggle uk-hidden@m" href="#" uk-toggle="target: #mobile_menu">
+            <span uk-navbar-toggle-icon></span> <span class="uk-margin-small-left">Menu</span>
+          </a>
+          <div id="mobile_menu" uk-offcanvas="mode: reveal; overlay: true; flip: true;">
+            <div class="uk-offcanvas-bar">
+              <button class="uk-offcanvas-close" type="button" uk-close></button>
+              <ul class="uk-nav uk-nav-default">
+                <li>
+                  <%= link_to "대문", "/index" %>
+                </li>
+                <li class="uk-parent">
+                  <%= link_to "밤딸기", "/about" %>
+                    <ul class="uk-nav-sub">
+                      <li><%= link_to "소개", "/about" %></li>
+                      <li><%= link_to "공지", "/notice" %></li>
+                      <li><%= link_to "기부", "/donation" %></li>
+                      <li><%= link_to "이용 약관", "/terms-of-service" %></li>
+                    </ul>
+                </li>
+                <li class="uk-parent">
+                  <%= link_to "마인크래프트", "/minecraft" %>
+                    <ul class="uk-nav-sub">
+                      <li><%= link_to "소개", "/minecraft/about" %></li>
+                      <li><%= link_to "규칙", "/minecraft/rules" %></li>
+                      <li><%= link_to "접속", "/minecraft/connect" %></li>
+                      <li><%= link_to "지도", "/minecraft/maps" %></li>
+                      <li><%= link_to "위키⎋", "https://wiki.minecraft.nachtbeere.net/wiki/%EB%A7%88%ED%9E%88%EC%BB%A4:%EB%8C%80%EB%AC%B8", target:'_blank' %></li>
+                    </ul>
+                </li>
+                <li class="uk-parent">
+                  <%= link_to "다른 게임들", "/multiplay/about" %>
+                    <ul class="uk-nav-sub">
+                      <li><%= link_to "소개", "/multiplay/about" %></li>
+                      <li><%= link_to "Open TTD", "/multiplay/ottd" %></li>
+                      <li><%= link_to "Open RCT", "/multiplay/orct" %></li>
+                    </ul>
+                </li>
+                <% if logged_in? %>
                   <li>
-                    <%= link_to "대문", "/index" %>
+                    <%= link_to "프로필", "/profile", method: "get" %>
                   </li>
-                  <li class="uk-parent">
-                    <%= link_to "밤딸기", "/about" %>
-                      <ul class="uk-nav-sub">
-                        <li><%= link_to "소개", "/about" %></li>
-                        <li><%= link_to "공지", "/notice" %></li>
-                        <li><%= link_to "기부", "/donation" %></li>
-                        <li><%= link_to "이용 약관", "/terms-of-service" %></li>
-                      </ul>
-                  </li>
-                  <li class="uk-parent">
-                    <%= link_to "마인크래프트", "/minecraft" %>
-                      <ul class="uk-nav-sub">
-                        <li><%= link_to "소개", "/minecraft/about" %></li>
-                        <li><%= link_to "규칙", "/minecraft/rules" %></li>
-                        <li><%= link_to "접속", "/minecraft/connect" %></li>
-                        <li><%= link_to "지도", "/minecraft/maps" %></li>
-                        <li><%= link_to "위키⎋", "https://wiki.minecraft.nachtbeere.net/wiki/%EB%A7%88%ED%9E%88%EC%BB%A4:%EB%8C%80%EB%AC%B8", target:'_blank' %></li>
-                      </ul>
-                  </li>
-                  <li class="uk-parent">
-                    <%= link_to "다른 게임들", "/multiplay/about" %>
-                      <ul class="uk-nav-sub">
-                        <li><%= link_to "소개", "/multiplay/about" %></li>
-                        <li><%= link_to "Open TTD", "/multiplay/ottd" %></li>
-                        <li><%= link_to "Open RCT", "/multiplay/orct" %></li>
-                      </ul>
-                  </li>
-                  <% if logged_in? %>
-                    <li>
-                      <%= link_to "프로필", "/profile", method: "get" %>
-                    </li>
-                    <% if current_user.admin? %>
-                      <li><%= link_to "관리 패널", "/admin", method: "get" %></li>
-                    <% end %>
-                    <li>
-                      <%= link_to "로그아웃", "/sign_out", method: "get" %>
-                  <% else %>
-                    <li>
-                      <%= link_to "로그인", "/sign_in", method: "get" %>
+                  <% if current_user.admin? %>
+                    <li><%= link_to "관리 패널", "/admin", method: "get" %></li>
                   <% end %>
-                  </li>
+                  <li>
+                    <%= link_to "로그아웃", "/sign_out", method: "get" %>
+                <% else %>
+                  <li>
+                    <%= link_to "로그인", "/sign_in", method: "get" %>
+                <% end %>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <ul class="uk-navbar-nav uk-visible@m">
+            <li>
+              <%= link_to "대문", "/index" %>
+            </li>
+            <li>
+              <%= link_to "밤딸기", "/about" %>
+              <div class="uk-navbar-dropdown">
+                <ul class="uk-nav uk-navbar-dropdown-nav">
+                  <li><%= link_to "소개", "/about" %></li>
+                  <li><%= link_to "공지", "/notice" %></li>
+                  <li><%= link_to "기부", "/donation" %></li>
+                  <li><%= link_to "이용 약관", "/terms-of-service" %></li>
                 </ul>
               </div>
-            </div>
-            <ul class="uk-navbar-nav uk-visible@m">
+            </li>
+            <li>
+              <%= link_to "마인크래프트", "/minecraft" %>
+              <div class="uk-navbar-dropdown">
+                <ul class="uk-nav uk-navbar-dropdown-nav">
+                  <li><%= link_to "소개", "/minecraft/about" %></li>
+                  <li><%= link_to "규칙", "/minecraft/rules" %></li>
+                  <li><%= link_to "접속", "/minecraft/connect" %></li>
+                  <li><%= link_to "지도", "/minecraft/maps" %></li>
+                  <li><%= link_to "위키⎋", "https://wiki.minecraft.nachtbeere.net/wiki/%EB%A7%88%ED%9E%88%EC%BB%A4:%EB%8C%80%EB%AC%B8", target:'_blank' %></li>
+                </ul>
+              </div>
+            </li>
+            <li>
+              <%= link_to "다른 게임들", "/multiplay/about" %>
+              <div class="uk-navbar-dropdown">
+                <ul class="uk-nav uk-navbar-dropdown-nav">
+                  <li><%= link_to "소개", "/multiplay/about" %></li>
+                  <li><%= link_to "Open TTD", "/multiplay/ottd" %></li>
+                  <li><%= link_to "Open RCT", "/multiplay/orct" %></li>
+                </ul>
+              </div>
+            </li>
+            <% if logged_in? %>
               <li>
-                <%= link_to "대문", "/index" %>
+                <%= link_to "", "/profile", method: "get", data: {"uk-icon": "icon: user"} %>
               </li>
               <li>
-                <%= link_to "밤딸기", "/about" %>
-                <div class="uk-navbar-dropdown">
-                  <ul class="uk-nav uk-navbar-dropdown-nav">
-                    <li><%= link_to "소개", "/about" %></li>
-                    <li><%= link_to "공지", "/notice" %></li>
-                    <li><%= link_to "기부", "/donation" %></li>
-                    <li><%= link_to "이용 약관", "/terms-of-service" %></li>
-                  </ul>
-                </div>
-              </li>
+                <%= link_to "", "/sign_out", method: "get", data: {"uk-icon": "icon: sign-out"} %>
+              <% else %>
               <li>
-                <%= link_to "마인크래프트", "/minecraft" %>
-                <div class="uk-navbar-dropdown">
-                  <ul class="uk-nav uk-navbar-dropdown-nav">
-                    <li><%= link_to "소개", "/minecraft/about" %></li>
-                    <li><%= link_to "규칙", "/minecraft/rules" %></li>
-                    <li><%= link_to "접속", "/minecraft/connect" %></li>
-                    <li><%= link_to "지도", "/minecraft/maps" %></li>
-                    <li><%= link_to "위키⎋", "https://wiki.minecraft.nachtbeere.net/wiki/%EB%A7%88%ED%9E%88%EC%BB%A4:%EB%8C%80%EB%AC%B8", target:'_blank' %></li>
-                  </ul>
-                </div>
-              </li>
-              <li>
-                <%= link_to "다른 게임들", "/multiplay/about" %>
-                <div class="uk-navbar-dropdown">
-                  <ul class="uk-nav uk-navbar-dropdown-nav">
-                    <li><%= link_to "소개", "/multiplay/about" %></li>
-                    <li><%= link_to "Open TTD", "/multiplay/ottd" %></li>
-                    <li><%= link_to "Open RCT", "/multiplay/orct" %></li>
-                  </ul>
-                </div>
-              </li>
-              <% if logged_in? %>
-                <li>
-                  <%= link_to "", "/profile", method: "get", data: {"uk-icon": "icon: user"} %>
-                </li>
-                <li>
-                  <%= link_to "", "/sign_out", method: "get", data: {"uk-icon": "icon: sign-out"} %>
-                <% else %>
-                <li>
                 <%= link_to "", "/sign_in", method: "get", data: {"uk-icon": "icon: sign-in"} %>
-                <% end %>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </div>
+              <% end %>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
   </header>
   <main id="content" class="uk-section uk-section-default">
     <div class="uk-container uk-container-small">
-      <article>
+      <article class="uk-container">
       <%= breadcrumbs separator: "" %>
         <%= yield %>
       </article>
     </div>
   </main>
-  </body>
+</body>
 <footer class="uk-section">
 <div class="uk-text-center uk-padding uk-padding-remove-horizontal">
   <span class="uk-text-small uk-text-muted">
@@ -149,11 +149,11 @@
     <% end %>
     <% if type == "alert" %>
       <script type="text/javascript">
-          window.onload = function(){
-              UIkit.notification(
-                  {message: '<%= msg %>', status: 'danger'}
-              );
-          }
+        window.onload = function(){
+          UIkit.notification(
+            {message: '<%= msg %>', status: 'danger'}
+          );
+        }
       </script>
     <% end %>
   <% end %>

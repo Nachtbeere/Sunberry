@@ -18,6 +18,7 @@
 body {
   white-space: normal;
   word-break: keep-all;
+  word-wrap: break-word;
 }
 
 span.site_logo {
@@ -49,7 +50,7 @@ p span.do_not_display {
 }
 
 .breadcrumbs {
-  @extend .uk-breadcrumb
+  @extend .uk-breadcrumb;
 }
 
 .uk-open > .uk-offcanvas-reveal {
@@ -62,4 +63,9 @@ p span.do_not_display {
 
 .uk-offcanvas-flip .uk-offcanvas-reveal .uk-offcanvas-bar {
   width: 150px;
+}
+
+.uk-width-xsmall {
+  @extend .uk-width-small;
+  width: 100px;
 }

@@ -1,0 +1,11 @@
+<% breadcrumb :notice %>
+<h1><%= t(@board_name) %></h1>
+<h2><%= @article.tag %> | <%= @article.title %></h2>
+<span class="uk-text-meta uk-margin-right"><span uk-icon="user"></span> <%= @article.user.username %></span>
+<span class="uk-text-meta uk-margin-right"><span uk-icon="clock"></span> <%= @article.created_at.strftime("%F %T") %></span>
+<span class="uk-text-meta uk-margin-right"><span uk-icon="search"></span> <%= @article.hits %></span>
+<hr class="uk-margin-small">
+<div class="uk-container">
+  <%= @article.content.html_safe %>
+</div>
+<hr class="uk-margin-large">
