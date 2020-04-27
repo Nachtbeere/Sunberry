@@ -1,5 +1,8 @@
 defaults: &DEFAULTS
-minecraft_map_url: ""
+  domain: ""
+  article_categories: []
+  mailgun_api_key: ""
+  minecraft_map_url: ""
 
 development:
   <<: *DEFAULTS

@@ -109,4 +109,15 @@ Rails.application.configure do
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
+  require 'ostruct'
+  require 'yaml'
+
+  _config = YAML.load_file(Rails.root.join("config/config.yml"))[Rails.env] || YAML.load_file(Rails.root.join("config/config.yml.example"))[Rails.env]
+  ADDITIONAL_CONFIG = OpenStruct.new(_config)
+
+  config.action_mailer.delivery_method = :mailgun
+  config.action_mailer.mailgun_settings = {
+      api_key: ADDITIONAL_CONFIG["mailgun_api_key"],
+      domain: ADDITIONAL_CONFIG["domain"]
+  }
 end
