@@ -1,4 +1,4 @@
-<% breadcrumb :article %>
+<% breadcrumb :article_list %>
 <h1><%= t(@board_name) %></h1>
 <ul class="uk-list uk-list-divider">
  <li>
@@ -12,7 +12,11 @@
 <% unless @articles.each do |article| %>
   <li>
     <div class="uk-grid">
-      <div class="uk-inline uk-width-expand"><%=  link_to article.title, "notice/#{article.id}"  %></div>
+      <% if article.category == ADDITIONAL_CONFIG["article_categories"].find_index("notice") %>
+        <div class="uk-inline uk-width-expand title"><%=  link_to article.title, "notice/#{article.id}"  %></div>
+        <% else %>
+        <div class="uk-inline uk-width-expand title"><%=  link_to article.title, "board/#{article.id}"  %></div>
+      <% end %>
       <div class="uk-inline uk-width-xsmall uk-text-meta"><%=  article.user.username  %></div>
       <div class="uk-inline uk-width-small uk-text-meta" style="overflow: hidden"><%=  article.created_at.strftime("%F %T")  %></div>
       <div class="uk-inline uk-width-xsmall uk-text-meta"> <%=  article.hits  %></div>

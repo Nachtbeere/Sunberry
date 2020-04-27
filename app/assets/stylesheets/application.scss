@@ -69,3 +69,9 @@ p span.do_not_display {
   @extend .uk-width-small;
   width: 100px;
 }
+
+.title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
