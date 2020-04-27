@@ -1,0 +1,11 @@
+defaults: &DEFAULTS
+minecraft_map_url: ""
+
+development:
+  <<: *DEFAULTS
+
+test:
+  <<: *DEFAULTS
+
+production:
+  <<: *DEFAULTS

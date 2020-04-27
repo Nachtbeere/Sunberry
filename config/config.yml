@@ -1,0 +1,11 @@
+defaults: &DEFAULTS
+  minecraft_map_url: "http://maps.minecraft.nightly.nachtbeere.net"
+
+development:
+  <<: *DEFAULTS
+
+test:
+  <<: *DEFAULTS
+
+production:
+  <<: *DEFAULTS
