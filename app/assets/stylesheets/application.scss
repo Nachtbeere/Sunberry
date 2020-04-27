@@ -1,0 +1,60 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ //*= require_tree .
+ //*= require_self
+ */
+@import 'uikit.min';
+
+body {
+  white-space: normal;
+  word-break: keep-all;
+}
+
+span.site_logo {
+  margin-left: 15px;
+  font-weight: 600;
+  font-size: 22px;
+}
+
+span.site_logo a,
+span.site_logo a:active,
+span.site_logo a:focus,
+span.site_logo a:visited,
+span.site_logo a:hover {
+  text-decoration: none;
+  outline: none;
+  color: #666;
+}
+
+p span.logo {
+    font-size: 72px;
+}
+p span.do_not_display {
+    display: none;
+}
+
+.breadcrumbs {
+  @extend .uk-breadcrumb
+}
+
+.uk-open > .uk-offcanvas-reveal {
+  width: 150px;
+}
+
+.uk-offcanvas-flip.uk-offcanvas-container-animation {
+  left: -150px;
+}
+
+.uk-offcanvas-flip .uk-offcanvas-reveal .uk-offcanvas-bar {
+  width: 150px;
+}

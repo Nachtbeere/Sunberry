@@ -1,0 +1,94 @@
+<% breadcrumb :sign_up %>
+<% if logged_in? %>
+  <h1>You are Logged In, <%= current_user.username %></h1>
+<%end%>
+<!--<div class="uk-width-medium uk-padding-small uk-position-z-index uk-scrollspy-inview uk-animation-fade" uk-scrollspy="cls: uk-animation-fade" style="">-->
+<div class="uk-text-center uk-margin">
+  <h1>가입하기</h1>
+  <!--    <img src="img/login-logo.svg" alt="Logo">-->
+</div>
+<%= form_for '/sign_up', html: {class: "toggle-class"} do %>
+  <fieldset class="uk-fieldset">
+    <div class="uk-margin-small">
+      <div class="uk-grid">
+        <div class="uk-inline uk-width-1-4" style="text-align: right">
+          <span>이메일 주소</span>
+        </div>
+        <div class="uk-inline uk-width-expand">
+          <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: mail"></span>
+          <%= email_field_tag :email, "", {placeholder: "로그인과 비밀번호 찾기에 사용됩니다", class: "uk-input uk-border-pill", required: "required"} %>
+        </div>
+        <div class="uk-inline uk-width-1-5">
+        </div>
+      </div>
+    </div>
+    <div class="uk-margin-small">
+      <div class="uk-grid">
+        <div class="uk-inline uk-width-1-4" style="text-align: right">
+          <span>유저네임</span>
+        </div>
+        <div class="uk-inline uk-width-expand">
+          <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: user"></span>
+          <%= text_field_tag :username, "", {placeholder: "게시판, 댓글 등에 표시됩니다", class: "uk-input uk-border-pill", required: "required"} %>
+        </div>
+        <div class="uk-inline uk-width-1-5">
+        </div>
+      </div>
+    </div>
+    <div class="uk-margin-small">
+      <div class="uk-grid">
+        <div class="uk-inline uk-width-1-4" style="text-align: right">
+          <span>비밀번호</span>
+        </div>
+        <div class="uk-inline uk-width-expand">
+          <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: lock"></span>
+          <%= password_field_tag :password, "", {placeholder: "영문 대소문자, 숫자, 특수문자를 조합해주세요", class: "uk-input uk-border-pill", required: "required"} %>
+        </div>
+        <div class="uk-inline uk-width-1-5">
+        </div>
+      </div>
+    </div>
+    <div class="uk-margin-small">
+      <div class="uk-grid">
+        <div class="uk-inline uk-width-1-4" style="text-align: right">
+          <span>비밀번호 확인</span>
+        </div>
+        <div class="uk-inline uk-width-expand">
+          <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: lock"></span>
+          <%= password_field_tag :password_confirmation, "", {placeholder: "영문 대소문자, 숫자, 특수문자를 조합해주세요", class: "uk-input uk-border-pill", required: "required"} %>
+        </div>
+        <div class="uk-inline uk-width-1-5">
+        </div>
+      </div>
+    </div>
+    <div class="uk-margin-small">
+      <div class="uk-grid">
+        <div class="uk-inline uk-width-1-4" style="text-align: right">
+          <span>마인크래프트 유저네임</span>
+        </div>
+        <div class="uk-inline uk-width-expand">
+          <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: world"></span>
+          <%= text_field_tag :minecraft_username, "", {placeholder: "없으면 비워도 됩니다", class: "uk-input uk-border-pill"} %>
+        </div>
+        <div class="uk-inline uk-width-1-5">
+        </div>
+      </div>
+    </div>
+    <div class="uk-margin-small">
+      <div class="uk-grid">
+        <div class="uk-inline uk-width-1-4" style="text-align: right">
+          <span><a href="terms-of-service" target="_blank">이용약관</a>에</span>
+        </div>
+        <div class="uk-inline uk-width-expand">
+          <%= button_tag "동의합니다", {type: "button", name: "동의합니다", data: {"uk-toggle": "target: .toggle-animation-queued; animation: uk-animation-fade; queued: true; duration: 300"}, class: "toggle-animation-queued uk-button uk-button-default uk-width-1-1 uk-margin-small-bottom", required: "required"} %>
+          <p class="toggle-animation-queued uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom" hidden>동의합니다</p>
+          <%= hidden_field_tag :accept_terms, "", {required: "required"} %>
+        </div>
+        <div class="uk-inline uk-width-1-3">
+          <span>동의해야 가입할 수 있습니다</span>
+        </div>
+      </div>
+    </div>
+      <%= submit_tag "가입", {class: "uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom"} %>
+  </fieldset>
+<% end %>
