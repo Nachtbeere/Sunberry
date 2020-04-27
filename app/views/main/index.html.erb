@@ -21,7 +21,7 @@
         <li>
           <div class="uk-grid">
             <div class="uk-inline uk-width-expand title"><%=  link_to article.title, "board/#{article.id}"  %></div>
-            <div class="uk-inline uk-width-small uk-text-meta" style="overflow: hidden"><%=  article.created_at.strftime("%F %T")  %></div>
+            <div class="uk-inline uk-width-small uk-text-meta" style="overflow: hidden"><%=  article.user.username  %></div>
           </div>
         </li>
       <%  end  %>
