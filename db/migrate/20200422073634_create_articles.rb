@@ -6,7 +6,6 @@ class CreateArticles < ActiveRecord::Migration[6.0]
       t.string :content
       t.integer :category
       t.integer :tag
-      t.integer :hits
       t.datetime :created_at
       t.datetime :updated_at
     end

@@ -1,5 +1,34 @@
-<h2>공지</h2>
-<%# %>
+
+<div class="uk-child-width-expand@s" uk-grid>
+  <div>
+    <h2>공지</h2>
+    <div class="uk-card uk-card-default uk-card-body">
+      <% unless @articles_notice.each do |article| %>
+        <li>
+          <div class="uk-grid">
+            <div class="uk-inline uk-width-expand"><%=  link_to article.title, "notice/#{article.id}"  %></div>
+            <div class="uk-inline uk-width-auto uk-text-meta" style="overflow: hidden"><%=  article.created_at.strftime("%F")  %></div>
+          </div>
+        </li>
+      <%  end  %>
+      <%  end %>
+    </div>
+  </div>
+  <div>
+    <h2>게시판</h2>
+    <div class="uk-card uk-card-default uk-card-body">
+      <% unless @articles_general.each do |article| %>
+        <li>
+          <div class="uk-grid">
+            <div class="uk-inline uk-width-expand"><%=  link_to article.title, "notice/#{article.id}"  %></div>
+            <div class="uk-inline uk-width-small uk-text-meta" style="overflow: hidden"><%=  article.created_at.strftime("%F %T")  %></div>
+          </div>
+        </li>
+      <%  end  %>
+      <%  end %>
+    </div>
+  </div>
+</div>
 <h2>멀티플레이 서버 목록</h2>
 <%= image_tag("pages/multiplays.jpg", alt: "multiplay servers", class: "main_banner") %>
 <h3>Minecraft</h3>

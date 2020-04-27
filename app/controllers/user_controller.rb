@@ -53,14 +53,18 @@ class UserController < ApplicationController
           username: params[:username],
           minecraft_username: params[:minecraft_username],
           minecraft_uuid: params[:minecraft_uuid] || '',
-          role: User.ROLES[:general],
+          role: User::ROLES[:general],
           is_verified: false,
           created_at: created_time,
           login_at: created_time
         )
-        user.save
-        session[:user_id] = user.id
-        redirect_to '/', flash: { alert: '회원가입 되었습니다' }
+        if user.save
+          UserMailer.with(user: user).confirm_email.deliver_later
+          session[:user_id] = user.id
+          redirect_to '/', flash: { alert: '회원가입 되었습니다' }
+        else
+          redirect_to 'user/sign_up', flash: { alert: '입력한 정보가 올바르지 않습니다' }
+        end
       else
         redirect_to 'user/sign_up', flash: { alert: '입력한 정보가 올바르지 않습니다' }
       end
