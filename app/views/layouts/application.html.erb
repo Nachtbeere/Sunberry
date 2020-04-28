@@ -118,6 +118,9 @@
               <li>
                 <%= link_to "", "/profile", method: "get", data: {"uk-icon": "icon: user"} %>
               </li>
+              <% if current_user.admin? %>
+                <li><%= link_to "", "/admin", method: "get", data: {"uk-icon":  "icon: server"} %></li>
+              <% end %>
               <li>
                 <%= link_to "", "/sign-out", method: "get", data: {"uk-icon": "icon: sign-out"} %>
               <% else %>

@@ -15,4 +15,8 @@ class User < ApplicationRecord
   def admin?
     role == ROLES[:admin]
   end
+
+  def confirmation_token
+    @confirmation_token ||= SecureRandom.urlsafe_base64.to_s
+  end
 end
