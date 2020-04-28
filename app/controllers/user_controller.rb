@@ -25,10 +25,10 @@ class UserController < ApplicationController
         session[:user_id] = user.id
         redirect_to '/', flash: { info: '로그인 되었습니다' }
       else
-        redirect_to '/sign_in', flash: { alert: '이메일 주소나 비밀번호가 일치하지 않습니다' }
+        redirect_to '/sign-in', flash: { alert: '이메일 주소나 비밀번호가 일치하지 않습니다' }
       end
     else
-      redirect_to '/sign_in', flash: { alert: '잘못된 접근입니다' }
+      redirect_to '/sign-in', flash: { alert: '잘못된 접근입니다' }
     end
   end
 
@@ -42,7 +42,7 @@ class UserController < ApplicationController
     logger.debug request.method
     if request.method_symbol == :post
       user = User.find_by(email: params[:email].downcase)
-      redirect_to('/sign_up', flash: { alert: '이미 등록된 E-Mail입니다' }) && return if user
+      redirect_to('/sign-up', flash: { alert: '이미 등록된 E-Mail입니다' }) && return if user
 
       if params[:password] == params[:password_confirmation]
         created_time = Time.now
@@ -63,10 +63,10 @@ class UserController < ApplicationController
           session[:user_id] = user.id
           redirect_to '/', flash: { alert: '회원가입 되었습니다' }
         else
-          redirect_to 'user/sign_up', flash: { alert: '입력한 정보가 올바르지 않습니다' }
+          redirect_to '/sign-up', flash: { alert: '입력한 정보가 올바르지 않습니다' }
         end
       else
-        redirect_to 'user/sign_up', flash: { alert: '입력한 정보가 올바르지 않습니다' }
+        redirect_to '/sign-up', flash: { alert: '입력한 정보가 올바르지 않습니다' }
       end
     else
       redirect_to '/sign_up', flash: { alert: '잘못된 접근입니다' }
@@ -98,6 +98,13 @@ class UserController < ApplicationController
   end
 
   def drop_out
-
+    user = User.find_by(id: current_user.id)
+    if user
+      user.delete
+      session[:user_id] = nil
+      redirect_to '/', flash: { info: '탈퇴 되었습니다' }
+    else
+      redirect_to '/', flash: { alert: '잘못된 요청입니다' }
+    end
   end
 end
