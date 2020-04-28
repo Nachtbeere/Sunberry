@@ -76,4 +76,28 @@ class UserController < ApplicationController
   def profile_page
     render 'user/profile'
   end
+
+  def modify_password
+    user = User.find_by(id: current_user.id)
+    if user&.authenticate(params[:old_password])
+      if params[:password] == params[:password_confirmation]
+        user.password_digest = BCrypt::Password.create(params[:password])
+        user.save
+        redirect_to '/profile', flash: { info: '비밀번호가 변경되었습니다' }
+      else
+        redirect_to '/profile', flash: { alert: '새 비밀번호가 일치하지 않습니다' }
+      end
+    else
+      session[:user_id] = nil
+      redirect_to '/', flash: { alert: '비밀번호가 일치하지 않습니다' }
+    end
+  end
+
+  def modify_minecraft
+
+  end
+
+  def drop_out
+
+  end
 end

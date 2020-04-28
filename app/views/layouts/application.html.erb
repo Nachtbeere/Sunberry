@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <% unless current_page?("/") || current_page?("/index") || current_page?("/sign_up") || current_page?("/terms-of-service") || current_page?("/sign_in") %>
+    <% unless current_page?("/") || current_page?("/index") || current_page?("/sign-up") || current_page?("/terms-of-service") || current_page?("/sign-in") || current_page?("/profile") %>
       <script data-name="BMC-Widget" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="noxowl" data-description="밤딸기 운영에 힘이 되도록 피자를 보내주세요!" data-message="오늘도 밤딸기에 방문해 주셔서 감사합니다." data-color="#FF813F" data-position="right" data-x_margin="18" data-y_margin="18"></script>
     <% end %>
   </head>
@@ -67,10 +67,10 @@
                     <li><%= link_to "관리 패널", "/admin", method: "get" %></li>
                   <% end %>
                   <li>
-                    <%= link_to "로그아웃", "/sign_out", method: "get" %>
+                    <%= link_to "로그아웃", "/sign-out", method: "get" %>
                 <% else %>
                   <li>
-                    <%= link_to "로그인", "/sign_in", method: "get" %>
+                    <%= link_to "로그인", "/sign-in", method: "get" %>
                 <% end %>
                 </li>
               </ul>
@@ -119,10 +119,10 @@
                 <%= link_to "", "/profile", method: "get", data: {"uk-icon": "icon: user"} %>
               </li>
               <li>
-                <%= link_to "", "/sign_out", method: "get", data: {"uk-icon": "icon: sign-out"} %>
+                <%= link_to "", "/sign-out", method: "get", data: {"uk-icon": "icon: sign-out"} %>
               <% else %>
               <li>
-                <%= link_to "", "/sign_in", method: "get", data: {"uk-icon": "icon: sign-in"} %>
+                <%= link_to "", "/sign-in", method: "get", data: {"uk-icon": "icon: sign-in"} %>
               <% end %>
             </li>
           </ul>

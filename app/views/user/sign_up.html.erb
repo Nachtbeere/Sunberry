@@ -1,13 +1,10 @@
 <% breadcrumb :sign_up %>
-<% if logged_in? %>
-  <h1>You are Logged In, <%= current_user.username %></h1>
-<%end%>
 <!--<div class="uk-width-medium uk-padding-small uk-position-z-index uk-scrollspy-inview uk-animation-fade" uk-scrollspy="cls: uk-animation-fade" style="">-->
 <div class="uk-text-center uk-margin">
   <h1>가입하기</h1>
   <!--    <img src="img/login-logo.svg" alt="Logo">-->
 </div>
-<%= form_for '/sign_up', html: {class: "toggle-class"} do %>
+<%= form_for '/sign-up', html: {class: "toggle-class"} do %>
   <fieldset class="uk-fieldset">
     <div class="uk-margin-small">
       <div class="uk-grid">
