@@ -1,5 +1,6 @@
 class Article < ApplicationRecord
   belongs_to :user
+  has_rich_text :content
   acts_as_punchable
 
   def self.get_by_page(page, category)

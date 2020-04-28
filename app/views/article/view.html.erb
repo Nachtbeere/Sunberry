@@ -6,6 +6,12 @@
 <span class="uk-text-meta uk-margin-right"><span uk-icon="search"></span> <%= @article.hits %></span>
 <hr class="uk-margin-small">
 <div class="uk-container">
-  <%= @article.content.html_safe %>
+  <%= @article.content %>
+  <%#= @article.content.html_safe %>
 </div>
 <hr class="uk-margin-large">
+<% if @board_name == 'notice' %>
+  <%= link_to "목록", '/notice', method: :get, category: @board_name, class: "uk-button uk-button-default uk-width-1-1 uk-margin-small-bottom toggle-class" %>
+<% else %>
+  <%= link_to "목록", '/board', method: :get, category: @board_name, class: "uk-button uk-button-default uk-width-1-1 uk-margin-small-bottom toggle-class" %>
+<% end %>
