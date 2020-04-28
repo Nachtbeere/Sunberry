@@ -1,0 +1,26 @@
+defaults: &DEFAULTS
+  domain: ""
+  article_categories: ["", ""]
+  mailgun_api_key: ""
+  minecraft_map_url: ""
+
+development:
+  <<: *DEFAULTS
+  redis:
+    host: ""
+    port: ""
+    db: ""
+
+test:
+  <<: *DEFAULTS
+  redis:
+    host: ""
+    port: ""
+    db: ""
+
+production:
+  <<: *DEFAULTS
+  redis:
+    host: ""
+    port: ""
+    db: ""

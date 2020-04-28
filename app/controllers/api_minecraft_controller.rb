@@ -1,4 +1,4 @@
-class MinecraftController < ApplicationController
+class ApiMinecraftController < ApplicationController
   require 'net/http'
 
   def get_uuid_by_name

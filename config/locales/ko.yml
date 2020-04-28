@@ -1,0 +1,9 @@
+ko:
+  notice: "공지"
+  general: "게시판"
+  views:
+    pagination:
+      first: "처음"
+      previous: "이전"
+      next: "다음"
+      last: "마지막"

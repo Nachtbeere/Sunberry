@@ -14,10 +14,12 @@
  //*= require_self
  */
 @import 'uikit.min';
+@import 'trix';
 
 body {
   white-space: normal;
   word-break: keep-all;
+  word-wrap: break-word;
 }
 
 span.site_logo {
@@ -43,8 +45,13 @@ p span.do_not_display {
     display: none;
 }
 
+.main_banner {
+  width: 100%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 .breadcrumbs {
-  @extend .uk-breadcrumb
+  @extend .uk-breadcrumb;
 }
 
 .uk-open > .uk-offcanvas-reveal {
@@ -57,4 +64,15 @@ p span.do_not_display {
 
 .uk-offcanvas-flip .uk-offcanvas-reveal .uk-offcanvas-bar {
   width: 150px;
+}
+
+.uk-width-xsmall {
+  @extend .uk-width-small;
+  width: 100px;
+}
+
+.title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

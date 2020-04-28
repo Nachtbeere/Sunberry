@@ -1,5 +1,42 @@
-<% breadcrumb :notice %>
-<h1><%= @board_name.html_safe %></h1>
-<%# @articles.each do |p| %>
-<!--  p.title-->
-<%# end %>
+<% breadcrumb :article_list %>
+<h1><%= t(@board_name) %></h1>
+<ul class="uk-list uk-list-divider">
+ <li>
+   <div class="uk-grid">
+     <div class="uk-inline uk-width-expand">제목</div>
+     <div class="uk-inline uk-width-xsmall">작성자</div>
+     <div class="uk-inline uk-width-small">작성일</div>
+     <div class="uk-inline uk-width-xsmall">조회수</div>
+   </div>
+ </li>
+<% unless @articles.each do |article| %>
+  <li>
+    <div class="uk-grid">
+      <% if article.category == ADDITIONAL_CONFIG["article_categories"].find_index("notice") %>
+        <div class="uk-inline uk-width-expand title"><%=  link_to article.title, "notice/#{article.id}"  %></div>
+        <% else %>
+        <div class="uk-inline uk-width-expand title"><%=  link_to article.title, "board/#{article.id}"  %></div>
+      <% end %>
+      <div class="uk-inline uk-width-xsmall uk-text-meta"><%=  article.user.username  %></div>
+      <div class="uk-inline uk-width-small uk-text-meta" style="overflow: hidden"><%=  article.created_at.strftime("%F %T")  %></div>
+      <div class="uk-inline uk-width-xsmall uk-text-meta"> <%=  article.hits  %></div>
+    </div>
+  </li>
+  <%  end  %>
+  <%  end %>
+</ul>
+<div class="uk-grid" uk-grid>
+  <div class="uk-width-1-3"></div>
+  <div class="uk-width-1-3"><%= paginate @articles %></div>
+  <div class="uk-width-1-3">
+    <div class="uk-text-right">
+    <% if @board_name == ADDITIONAL_CONFIG["article_categories"][0] && current_user != nil && current_user.admin? %>
+      <%= link_to "글쓰기", '/' + ADDITIONAL_CONFIG["article_categories"][0] + '/write', method: :get, category: @board_name, class: "uk-button uk-button-danger uk-margin-small-bottom toggle-class" %>
+    <% else %>
+      <% if current_user != nil && @board_name != ADDITIONAL_CONFIG["article_categories"][0] %>
+        <%= link_to "글쓰기", '/board/write', method: :get, category: @board_name, class: "uk-button uk-button-default uk-margin-small-bottom toggle-class uk-align-right" %>
+      <% end %>
+    <% end %>
+    </div>
+  </div>
+</div>

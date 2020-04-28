@@ -1,0 +1,110 @@
+<h1>회원 정보</h1>
+
+<ul class="uk-list uk-list-divider">
+  <li>
+    <div class="uk-grid">
+      <div class="uk-inline uk-width-small">유저네임</div>
+      <div class="uk-inline uk-width-expand"><%= current_user.username %></div>
+    </div>
+  </li>
+  <li>
+    <div class="uk-grid">
+      <div class="uk-inline uk-width-small">이메일 주소</div>
+      <div class="uk-inline uk-width-expand"><%= current_user.email %></div>
+    </div>
+  </li>
+  <% if current_user.minecraft_username != "" %>
+    <li>
+      <div class="uk-grid">
+        <div class="uk-inline uk-width-small">마인크래프트</div>
+        <div class="uk-inline uk-width-expand"><%= current_user.minecraft_username %></div>
+      </div>
+    </li>
+  <% end %>
+  <li>
+    <div class="uk-grid">
+      <div class="uk-inline uk-width-small">가입일</div>
+      <div class="uk-inline uk-width-expand"><%= current_user.created_at.in_time_zone("Seoul").strftime("%F %T") %></div>
+    </div>
+  </li>
+  <li>
+    <div class="uk-grid">
+      <div class="uk-inline uk-width-small">최근 로그인</div>
+      <div class="uk-inline uk-width-expand"><%= current_user.login_at.in_time_zone("Seoul").strftime("%F %T") %></div>
+    </div>
+  </li>
+</ul>
+<div>
+  <% if current_user.minecraft_username != "" %>
+    <button class="uk-button uk-button-default uk-margin-small-right" uk-toggle="target: #minecraft-info" type="button">마인크래프트 정보 변경</button>
+  <% else %>
+    <button class="uk-button uk-button-default uk-margin-small-right" uk-toggle="target: #minecraft-info" type="button">마인크래프트 정보 등록</button>
+  <% end %>
+  <button class="uk-button uk-button-default uk-margin-small-right" uk-toggle="target: #modify-password" type="button">비밀번호 변경</button>
+  <button class="uk-button uk-button-danger uk-margin-small-right" uk-toggle="target: #drop-out" type="button">회원 탈퇴</button>
+</div>
+
+<!-- This is the modal -->
+<div id="minecraft-info" uk-modal>
+  <div class="uk-modal-dialog uk-modal-body">
+    <% if current_user.minecraft_username != "" %>
+      <h2 class="uk-modal-title">마인크래프트 정보 변경</h2>
+    <% else %>
+      <h2 class="uk-modal-title">마인크래프트 정보 등록</h2>
+    <% end %>
+    <p class="uk-text-right">
+      <button class="uk-button uk-button-default uk-modal-close" type="button">취소</button>
+    <% if current_user.minecraft_username != "" %>
+        <button class="uk-button uk-button-primary" type="button">변경</button>
+    <% else %>
+      <button class="uk-button uk-button-primary" type="button">등록</button>
+    <% end %>
+    </p>
+  </div>
+</div>
+
+<div id="modify-password" uk-modal>
+  <div class="uk-modal-dialog uk-modal-body">
+      <h2 class="uk-modal-title">비밀번호 변경</h2>
+    <div>
+      <%= form_for '/modify-password', url: {action: 'modify_password'}, html: {class: "toggle-class"} do %>
+        <fieldset class="uk-fieldset">
+          <div class="uk-margin-small">
+            <div class="uk-inline uk-width-1-1">
+              <span class="uk-form-icon uk-form-icon-flip uk-icon" uk-icon="icon: unlock"></span>
+              <%= text_field_tag :old_password, "", {placeholder: " 기존 비밀번호", class: "uk-input uk-border-pill", required: "required"} %>
+            </div>
+          </div>
+          <div class="uk-margin-small">
+            <div class="uk-inline uk-width-1-1">
+              <span class="uk-form-icon uk-form-icon-flip uk-icon" uk-icon="icon: lock"></span>
+              <%= password_field_tag :password, "", {placeholder: "새 비밀번호", class: "uk-input uk-border-pill", required: "required"} %>
+            </div>
+          </div>
+          <div class="uk-margin-small">
+            <div class="uk-inline uk-width-1-1">
+              <span class="uk-form-icon uk-form-icon-flip uk-icon" uk-icon="icon: lock"></span>
+              <%= password_field_tag :password_confirmation, "", {placeholder: "새 비밀번호 확인", class: "uk-input uk-border-pill", required: "required"} %>
+            </div>
+          </div>
+        </fieldset>
+    </div>
+    <p class="uk-text-right">
+      <button class="uk-button uk-button-default uk-modal-close" type="button">취소</button>
+      <%= submit_tag "변경", {class: "uk-button uk-button-primary"} %>
+    </p>
+      <% end %>
+  </div>
+</div>
+
+<div id="drop-out" uk-modal>
+  <div class="uk-modal-dialog uk-modal-body">
+    <h2 class="uk-modal-title">회원 탈퇴</h2>
+    <p>회원 탈퇴시 계정 정보는 즉시 삭제되며, 다시 가입하기 전까지 밤딸기 플레이스에서 제공하는 멀티플레이 서버에 접속할 수 없게 됩니다.</p>
+    <p>정말로 탈퇴를 원하실 경우 '탈퇴' 버튼을 눌러주세요.</p>
+    <p class="uk-text-right">
+      <button class="uk-button uk-button-default uk-modal-close" type="button">취소</button>
+      <%= link_to "탈퇴", '/drop-out', method: :post, class: "uk-button uk-button-danger toggle-class" %>
+    </p>
+  </div>
+</div>
