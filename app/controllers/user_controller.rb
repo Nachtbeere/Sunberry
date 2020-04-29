@@ -1,5 +1,13 @@
 class UserController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:sign_in_page, :sign_up_page]
+  def duplicated_uuid?
+    user = User.find_by(minecraft_uuid: params[:uuid])
+    if user
+      render json: { 'duplicated': true }
+    else
+      render json: { 'duplicated': false }
+    end
+  end
 
   def sign_in_page
     redirect_to('/', flash: { alert: '이미 로그인되어 있습니다' }) && return if logged_in?
@@ -42,6 +50,8 @@ class UserController < ApplicationController
 
   def sign_up
     if request.method_symbol == :post
+      puts params
+      redirect_to('/sign-up', flash: { alert: '약관에 동의해주세요' }) && return unless params[:terms_accepted] == 'true'
       user = User.find_by(email: params[:email].downcase)
       redirect_to('/sign-up', flash: { alert: '이미 등록된 E-Mail입니다' }) && return if user
 

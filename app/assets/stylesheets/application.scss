@@ -22,6 +22,16 @@ body {
   word-wrap: break-word;
 }
 
+@media(max-width:960px){
+  .flex-category {
+    font-size: 12px;
+  }
+
+  input.flex-placeholder::placeholder {
+    font-size: 12px;
+  }
+}
+
 span.site_logo {
   margin-left: 15px;
   font-weight: 600;

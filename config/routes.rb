@@ -32,6 +32,7 @@ Rails.application.routes.draw do
   get 'admin', to: 'admin#index'
   post 'admin/mail-test', to: 'admin#mail_test'
   # api
+  get 'api/nachtbeere/users/uuid/:uuid', to: 'user#duplicated_uuid?'
   get 'api/minecraft/:server/server/health', to: 'api_minecraft#server_health'
   get 'api/minecraft/:server/server/info', to: 'api_minecraft#server_info'
   get 'api/minecraft/:server/server/system-info', to: 'api_minecraft#server_system_info'
