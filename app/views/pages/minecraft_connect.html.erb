@@ -8,7 +8,39 @@
         <div class="mainline">
           <h3>메인 서버</h3>
           <p class="server_url">connect.nachtbeere.net</p>
-          <p>Purifier 활용 서버 상태 뭐시기가 들어갈 자리</p>
+          <% if @health['mainline'] %>
+            <div class="uk-text-bold uk-text-primary">
+              <p>접속 가</p>
+            </div>
+            <div>
+              <span uk-icon="clock"></span>
+              <span><%= @system['mainline']['uptime'] %></span>
+            </div>
+            <div>
+              <span uk-icon="server"></span>
+              <span><%= @system['mainline']['memoryLoads'] %></span>
+            </div>
+            <div>
+              <span uk-icon="users"></span>
+              <span><%= @info['mainline']['currentPlayers'] %>/<%= @info['mainline']['maxPlayers'] %></span>
+            </div>
+          <% else %>
+            <div class="uk-text-bold uk-text-danger">
+              <p>접속 불가</p>
+            </div>
+            <div>
+              <span uk-icon="clock"></span>
+              <span>확인 불가</span>
+            </div>
+            <div>
+              <span uk-icon="server"></span>
+              <span>확인 불가</span>
+            </div>
+            <div>
+              <span uk-icon="users"></span>
+              <span>확인 불가</span>
+            </div>
+            <% end %>
         </div>
       </div>
     </div>
@@ -19,7 +51,41 @@
         <div class="nightly">
           <h3>테스트 서버</h3>
           <p class="server_url">nightly.nachtbeere.net</p>
-          <p>Purifier 활용 서버 상태 뭐시기가 들어갈 자리</p>
+          <div>
+          <% if @health['nightly'] %>
+            <div class="uk-text-bold uk-text-primary">
+              <p>접속 가능</p>
+            </div>
+            <div>
+              <span uk-icon="clock"></span>
+              <span><%= @system['nightly']['uptime'] %></span>
+            </div>
+            <div>
+              <span uk-icon="server"></span>
+              <span><%= @system['nightly']['memoryLoads'] %></span>
+            </div>
+            <div>
+              <span uk-icon="users"></span>
+              <span><%= @info['nightly']['currentPlayers'] %>/<%= @info['nightly']['maxPlayers'] %></span>
+            </div>
+          <% else %>
+            <div class="uk-text-bold uk-text-danger">
+              <p>접속 불가</p>
+            </div>
+            <div>
+              <span uk-icon="clock"></span>
+              <span>확인 불가</span>
+            </div>
+            <div>
+              <span uk-icon="server"></span>
+              <span>확인 불가</span>
+            </div>
+            <div>
+              <span uk-icon="users"></span>
+              <span>확인 불가</span>
+            </div>
+          <% end %>
+          </div>
         </div>
       </div>
     </div>
