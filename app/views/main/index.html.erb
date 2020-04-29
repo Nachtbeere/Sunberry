@@ -7,7 +7,7 @@
         <li>
           <div class="uk-grid">
             <div class="uk-inline uk-width-expand title"><%=  link_to article.title, "notice/#{article.id}"  %></div>
-            <div class="uk-inline uk-width-auto uk-text-meta" style="overflow: hidden"><%=  article.created_at.strftime("%F")  %></div>
+            <div class="uk-inline uk-width-auto uk-text-meta" style="overflow: hidden"><%=  article.created_at.in_time_zone("Seoul").strftime("%F")  %></div>
           </div>
         </li>
       <%  end  %>

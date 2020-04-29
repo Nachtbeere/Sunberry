@@ -16,6 +16,19 @@ class User < ApplicationRecord
     role == ROLES[:admin]
   end
 
+  def identity
+    sliced_email = email.split('@')
+    if admin?
+      sliced_email[0].capitalize
+    else
+      sliced_email[0] + '#' + sliced_email[1][0]
+    end
+  end
+
+  def username_identity
+    username + '(' + identity + ')'
+  end
+
   def confirmation_token
     @confirmation_token ||= SecureRandom.urlsafe_base64.to_s
   end

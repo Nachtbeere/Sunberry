@@ -18,7 +18,7 @@
         <div class="uk-inline uk-width-expand title"><%=  link_to article.title, "board/#{article.id}"  %></div>
       <% end %>
       <div class="uk-inline uk-width-xsmall uk-text-meta"><%=  article.user.username  %></div>
-      <div class="uk-inline uk-width-small uk-text-meta" style="overflow: hidden"><%=  article.created_at.strftime("%F %T")  %></div>
+      <div class="uk-inline uk-width-small uk-text-meta" style="overflow: hidden"><%=  article.created_at.in_time_zone("Seoul").strftime("%F %T")  %></div>
       <div class="uk-inline uk-width-xsmall uk-text-meta"> <%=  article.hits  %></div>
     </div>
   </li>
