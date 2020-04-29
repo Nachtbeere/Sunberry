@@ -27,6 +27,7 @@ gem 'punching_bag'
 gem 'kaminari'
 gem 'mail'
 gem 'mailgun-ruby', '~>1.1.6'
+gem 'curb'
 
 # Use Active Storage variant
 gem 'image_processing', '~> 1.2'

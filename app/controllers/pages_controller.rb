@@ -17,7 +17,7 @@ class PagesController < ApplicationController
   end
 
   def server_info
-    servers = ADDITIONAL_CONFIG['purifier_api']['endpoint'].keys
+    servers = ADDITIONAL_CONFIG['purifier_api']['host'].keys
     @health = {}
     @info = {}
     @system = {}

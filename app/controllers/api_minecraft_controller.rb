@@ -1,14 +1,14 @@
 class ApiMinecraftController < ApplicationController
-  def uuid_by_name
+  def uuid_from_name
     not_found unless server_param_validate
-    render json: libs.Purifier.uuid_by_name(params[:server],
-                                       params[:uuid])
+    render json: Purifier.uuid_from_name(params[:server],
+                                         params[:username])
   end
 
-  def name_by_uuid
+  def name_from_uuid
     not_found unless server_param_validate
-    render json: Purifier.name_by_uuid(params[:server],
-                                       params[:username])
+    render json: Purifier.name_from_uuid(params[:server],
+                                         params[:uuid])
   end
 
   def server_health
@@ -28,7 +28,7 @@ class ApiMinecraftController < ApplicationController
 
   private
   def server_param_validate
-    ADDITIONAL_CONFIG['purifier_api']['endpoint'].key?(params[:server])
+    ADDITIONAL_CONFIG['purifier_api']['host'].key?(params[:server])
   end
 
   def not_found

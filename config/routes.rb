@@ -35,8 +35,8 @@ Rails.application.routes.draw do
   get 'api/minecraft/:server/server/health', to: 'api_minecraft#server_health'
   get 'api/minecraft/:server/server/info', to: 'api_minecraft#server_info'
   get 'api/minecraft/:server/server/system-info', to: 'api_minecraft#server_system_info'
-  get 'api/minecraft/:server/users/username/:uuid', to: 'api_minecraft#uuid_by_name'
-  get 'api/minecraft/:server/users/uuid/:username', to: 'api_minecraft#name_by_uuid'
+  get 'api/minecraft/:server/users/username/:uuid', to: 'api_minecraft#name_from_uuid'
+  get 'api/minecraft/:server/users/uuid/:username', to: 'api_minecraft#uuid_from_name'
   # statics
   get 'about', to: 'pages#show', page: 'about'
   get 'donation', to: 'pages#show', page: 'donation'
