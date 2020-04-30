@@ -12,6 +12,11 @@ crumb :sign_up do
   parent :root
 end
 
+crumb :password_reset do
+  link '비밀번호 재설정', (url_for '/password-reset')
+  parent :root
+end
+
 crumb :profile do
   link '프로필', (url_for '/profile')
   parent :root

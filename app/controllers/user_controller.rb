@@ -1,5 +1,22 @@
 class UserController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:sign_in_page, :sign_up_page]
+  def duplicated_uuid?
+    user = User.find_by(minecraft_uuid: params[:uuid])
+    if user
+      render json: { 'duplicated': true }
+    else
+      render json: { 'duplicated': false }
+    end
+  end
+
+  def verified_uuid?
+    user = User.find_by(minecraft_uuid: params[:uuid])
+    if user&.is_verified
+      render json: { 'verified': true }
+    else
+      render json: { 'verified': false }
+    end
+  end
 
   def sign_in_page
     redirect_to('/', flash: { alert: '이미 로그인되어 있습니다' }) && return if logged_in?
@@ -42,6 +59,8 @@ class UserController < ApplicationController
 
   def sign_up
     if request.method_symbol == :post
+      redirect_to('/sign-up', flash: { alert: '약관에 동의해주세요' }) && return unless params[:terms_accepted] == 'true'
+      redirect_to('/sign-up', flash: { alert: '마인크래프트 정보를 확인해주세요' }) && return if params[:minecraft_username] != '' && params[:minecraft_uuid] == ''
       user = User.find_by(email: params[:email].downcase)
       redirect_to('/sign-up', flash: { alert: '이미 등록된 E-Mail입니다' }) && return if user
 
@@ -53,14 +72,14 @@ class UserController < ApplicationController
           password_confirmation: params[:password_confirmation],
           username: params[:username],
           minecraft_username: params[:minecraft_username],
-          minecraft_uuid: params[:minecraft_uuid] || '',
+          minecraft_uuid: params[:minecraft_uuid],
           role: User::ROLES[:general],
           created_at: created_time,
           login_at: created_time
         )
         if user.save
-          REDIS.set(user.confirmation_token, user.id.to_s)
-          UserMailer.with(user: user, token: user.confirmation_token).confirm_email.deliver_later
+          REDIS.set('email:' + user.confirmation_token, user.id.to_s)
+          UserMailer.with(user: user, token: user.confirmation_token, root_url: root_url).confirm_email.deliver_later
           redirect_to '/', flash: { alert: '가입 되었습니다. 인증 메일을 확인해주세요' }
         else
           redirect_to '/sign-up', flash: { alert: '입력한 정보가 올바르지 않습니다' }
@@ -74,22 +93,21 @@ class UserController < ApplicationController
   end
 
   def verify_email
-    user_id = REDIS.get(params[:token])
-    logger.debug user_id
+    email_token = 'email:' + params[:token]
+    user_id = REDIS.get(email_token)
     redirect_to('/', flash: { alert: '인증 정보가 없습니다' }) && return unless user_id
 
     user_id = user_id.to_i
-    logger.debug user_id
     user = User.find user_id
-    redirect_to('/', flash: { alert: '대충 문제가 있다는 메시지' }) && REDIS.del(params[:token]) && return unless user
+    redirect_to('/', flash: { alert: '대충 문제가 있다는 메시지' }) && REDIS.del(email_token) && return unless user
 
     if user.is_verified
-      REDIS.del(params[:token])
+      REDIS.del(email_token)
       redirect_to '/sign-in', flash: { info: '이미 인증되었습니다' }
     else
       user.is_verified = true
       user.save
-      REDIS.del(params[:token])
+      REDIS.del(email_token)
       redirect_to '/sign-in', flash: { info: '인증되었습니다' }
     end
   end
@@ -106,9 +124,13 @@ class UserController < ApplicationController
     user = User.find_by(id: current_user.id)
     if user&.authenticate(params[:old_password])
       if params[:password] == params[:password_confirmation]
+        user.password = params[:password]
         user.password_digest = BCrypt::Password.create(params[:password])
-        user.save
-        redirect_to '/profile', flash: { info: '비밀번호가 변경되었습니다' }
+        if user.save
+          redirect_to '/profile', flash: { info: '비밀번호가 변경되었습니다' }
+        else
+          redirect_to '/profile', flash: { info: '비밀번호 변경에 실패했습니다' }
+        end
       else
         redirect_to '/profile', flash: { alert: '새 비밀번호가 일치하지 않습니다' }
       end
@@ -119,7 +141,61 @@ class UserController < ApplicationController
   end
 
   def modify_minecraft
+    redirect_to('/sign-in', flash: { alert: '로그인 해주세요' }) && return if current_user.nil?
+    redirect_to('/profile', flash: { alert: '마인크래프트 정보를 확인해주세요' }) && return if params[:minecraft_username] != '' && params[:minecraft_uuid] == ''
 
+    user = User.find_by(id: current_user.id)
+    user.minecraft_username = params[:minecraft_username]
+    user.minecraft_uuid = params[:minecraft_uuid]
+    if user.save
+      redirect_to '/profile', flash: { info: '마인크래프트 정보가 변경되었습니다' }
+    else
+      redirect_to '/profile', flash: { alert: '마인크래프트 정보 변경에 실패했습니다' }
+    end
+  end
+
+  def request_password_reset
+    user = User.find_by(email: params[:email])
+    if user
+      REDIS.set('password:' + user.confirmation_token, user.id.to_s)
+      UserMailer.with(user: user, token: user.confirmation_token, root_url: root_url).password_reset_email.deliver_later
+      redirect_to '/', flash: { info: '비밀번호 재설정 메일을 보냈습니다' }
+    else
+      redirect_to '/', flash: { info: '존재하지 않는 계정입니다' }
+    end
+  end
+
+  def password_reset_page
+    if params.key?('token') && params[:token] != ''
+      password_token = 'password:' + params[:token]
+      user_id = REDIS.get(password_token)
+      redirect_to('/', flash: { alert: '인증 정보가 없습니다' }) && return unless user_id
+
+      @token = params[:token]
+      render 'user/password_reset'
+    else
+      redirect_to '/', flash: { alert: '잘못된 접근입니다' }
+    end
+  end
+
+  def password_reset
+    password_token = 'password:' + params[:token]
+    user_id = REDIS.get(password_token)
+    redirect_to('/', flash: { alert: '인증 정보가 없습니다' }) && return unless user_id
+
+    user = User.find_by(id: user_id)
+    if params[:password] == params[:password_confirmation]
+      user.password = params[:password]
+      user.password_digest = BCrypt::Password.create(params[:password])
+      if user.save
+        REDIS.del(password_token)
+        redirect_to '/sign-in', flash: { info: '비밀번호가 변경되었습니다' }
+      else
+        redirect_to '/sign-in', flash: { info: '비밀번호 변경에 실패했습니다' }
+      end
+    else
+      redirect_to '/sign-in', flash: { alert: '새 비밀번호가 일치하지 않습니다' }
+    end
   end
 
   def drop_out

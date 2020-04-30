@@ -1,14 +1,16 @@
 <% breadcrumb :article_view %>
 <h1><%= t(@board_name) %></h1>
 <h2><%= @article.tag %> | <%= @article.title %></h2>
-<span class="uk-text-meta uk-margin-right"><span uk-icon="user"></span> <%= @article.user.username %></span>
-<span class="uk-text-meta uk-margin-right"><span uk-icon="clock"></span> <%= @article.created_at.strftime("%F %T") %></span>
+<span class="uk-text-meta uk-margin-right"><span uk-icon="user"></span> <%= @article.user.username_identity %></span>
+<span class="uk-text-meta uk-margin-right"><span uk-icon="clock"></span> <%= @article.created_at.in_time_zone("Seoul").strftime("%F %T") %></span>
 <span class="uk-text-meta uk-margin-right"><span uk-icon="search"></span> <%= @article.hits %></span>
 <hr class="uk-margin-small">
 <div class="uk-container">
   <%= @article.content %>
-  <%#= @article.content.html_safe %>
 </div>
+<hr class="uk-margin-large">
+<%= render partial: 'reply/view' %>
+<%= render partial: 'reply/write' %>
 <hr class="uk-margin-large">
 <% if @board_name == 'notice' %>
   <%= link_to "목록", '/notice', method: :get, category: @board_name, class: "uk-button uk-button-default uk-width-1-1 uk-margin-small-bottom toggle-class" %>

@@ -1,3 +1,4 @@
+<%= render partial: 'api_minecraft/temp_minecraft_scripts' %>
 <h1>회원 정보</h1>
 
 <ul class="uk-list uk-list-divider">
@@ -52,48 +53,69 @@
     <% else %>
       <h2 class="uk-modal-title">마인크래프트 정보 등록</h2>
     <% end %>
+    <div>
+      <%= form_for '/modify-minecraft', url: {action: 'modify_minecraft'}, html: {class: "toggle-class"} do %>
+      <fieldset class="uk-fieldset">
+        <div class="uk-margin-small">
+          <div class="uk-grid">
+            <div class="uk-inline uk-width-1-4 flex-category" style="text-align: right">
+              <span>마인크래프트 유저네임</span>
+            </div>
+            <div class="uk-inline uk-width-expand">
+              <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: world"></span>
+              <div id="minecraft-loading" class="uk-overlay uk-overlay-default uk-position-cover">
+                <span uk-spinner class="uk-form-icon"></span>
+              </div>
+              <%= text_field_tag :minecraft_username, "", {placeholder: "", class: "uk-input uk-border-pill flex-placeholder"} %>
+              <%= hidden_field_tag :minecraft_uuid, "", style: 'visibility: hidden' %>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    </div>
     <p class="uk-text-right">
       <button class="uk-button uk-button-default uk-modal-close" type="button">취소</button>
     <% if current_user.minecraft_username != "" %>
-        <button class="uk-button uk-button-primary" type="button">변경</button>
+        <%= submit_tag "변경", {class: "uk-button uk-button-primary"} %>
     <% else %>
-      <button class="uk-button uk-button-primary" type="button">등록</button>
+        <%= submit_tag "등록", {class: "uk-button uk-button-primary"} %>
     <% end %>
     </p>
+    <% end %>
   </div>
 </div>
 
 <div id="modify-password" uk-modal>
   <div class="uk-modal-dialog uk-modal-body">
-      <h2 class="uk-modal-title">비밀번호 변경</h2>
+    <h2 class="uk-modal-title">비밀번호 변경</h2>
     <div>
       <%= form_for '/modify-password', url: {action: 'modify_password'}, html: {class: "toggle-class"} do %>
-        <fieldset class="uk-fieldset">
-          <div class="uk-margin-small">
-            <div class="uk-inline uk-width-1-1">
-              <span class="uk-form-icon uk-form-icon-flip uk-icon" uk-icon="icon: unlock"></span>
-              <%= text_field_tag :old_password, "", {placeholder: " 기존 비밀번호", class: "uk-input uk-border-pill", required: "required"} %>
-            </div>
+      <fieldset class="uk-fieldset">
+        <div class="uk-margin-small">
+          <div class="uk-inline uk-width-1-1">
+            <span class="uk-form-icon uk-form-icon-flip uk-icon" uk-icon="icon: unlock"></span>
+            <%= password_field_tag :old_password, "", {placeholder: " 기존 비밀번호", class: "uk-input uk-border-pill", required: "required"} %>
           </div>
-          <div class="uk-margin-small">
-            <div class="uk-inline uk-width-1-1">
-              <span class="uk-form-icon uk-form-icon-flip uk-icon" uk-icon="icon: lock"></span>
-              <%= password_field_tag :password, "", {placeholder: "새 비밀번호", class: "uk-input uk-border-pill", required: "required"} %>
-            </div>
+        </div>
+        <div class="uk-margin-small">
+          <div class="uk-inline uk-width-1-1">
+            <span class="uk-form-icon uk-form-icon-flip uk-icon" uk-icon="icon: lock"></span>
+            <%= password_field_tag :password, "", {placeholder: "새 비밀번호", class: "uk-input uk-border-pill", required: "required"} %>
           </div>
-          <div class="uk-margin-small">
-            <div class="uk-inline uk-width-1-1">
-              <span class="uk-form-icon uk-form-icon-flip uk-icon" uk-icon="icon: lock"></span>
-              <%= password_field_tag :password_confirmation, "", {placeholder: "새 비밀번호 확인", class: "uk-input uk-border-pill", required: "required"} %>
-            </div>
+        </div>
+        <div class="uk-margin-small">
+          <div class="uk-inline uk-width-1-1">
+            <span class="uk-form-icon uk-form-icon-flip uk-icon" uk-icon="icon: lock"></span>
+            <%= password_field_tag :password_confirmation, "", {placeholder: "새 비밀번호 확인", class: "uk-input uk-border-pill", required: "required"} %>
           </div>
-        </fieldset>
+        </div>
+      </fieldset>
     </div>
     <p class="uk-text-right">
       <button class="uk-button uk-button-default uk-modal-close" type="button">취소</button>
       <%= submit_tag "변경", {class: "uk-button uk-button-primary"} %>
     </p>
-      <% end %>
+    <% end %>
   </div>
 </div>
 

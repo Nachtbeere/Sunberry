@@ -1,26 +1,43 @@
 defaults: &DEFAULTS
   domain: ""
-  article_categories: ["", ""]
+  article_categories: ["notice", "general"]
   mailgun_api_key: ""
   minecraft_map_url: ""
+  mojang_api:
+    host: "https://api.mojang.com"
+    uuid_from_name: "users/profiles/minecraft"
+    name_from_uuid: "user/profiles/" # + <uuid>/names
+  purifier_api:
+    host:
+      mainline: ""
+      nightly: ""
+    redis_root: "purifier:"
+    version: "v1"
+    server:
+      health: "health"
+      info: "info"
+      system_info: "system-info"
+    users:
+      uuid: "users/uuid"
+      name: "users/username"
 
 development:
   <<: *DEFAULTS
   redis:
     host: ""
-    port: ""
+    port: 6379
     db: ""
 
 test:
   <<: *DEFAULTS
   redis:
     host: ""
-    port: ""
+    port: 6379
     db: ""
 
 production:
   <<: *DEFAULTS
   redis:
     host: ""
-    port: ""
+    port: 6379
     db: ""

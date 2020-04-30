@@ -1,0 +1,61 @@
+<!-- Must be relocated to webpack later -->
+<script>
+    function fetchUUID() {
+        let timeout = null;
+        let username_form  = document.getElementById('minecraft_username');
+        let uuid_form  = document.getElementById('minecraft_uuid');
+        let loading_overlay = document.getElementById('minecraft-loading');
+        loading_overlay.hidden = true
+        username_form.addEventListener('keyup', function (e) {
+            clearTimeout(timeout);
+            timeout = setTimeout(function () {
+                if (username_form.value.length > 3) {
+                    let username = username_form.value
+                    loading_overlay.hidden = false
+                    fetch("<%= root_url %>" + "api/minecraft/mainline/users/uuid/" + username)
+                        .then(response => {
+                            if (response.status >= 200 && response.status < 300) {
+                                response.json()
+                                    .then(json => {
+                                        if (json !== null) {
+                                            fetch("<%= root_url %>" + "api/nachtbeere/users/uuid/" + json['id'])
+                                                .then(response => response.json())
+                                                .then(json => json['duplicated'])
+                                                .then(function (duplicated) {
+                                                    if (duplicated) {
+                                                        uuid_form.setAttribute("value", "")
+                                                        username_form.classList.remove("uk-form-success")
+                                                        username_form.classList.add("uk-form-danger")
+                                                    } else {
+                                                        uuid_form.setAttribute("value", json['id'])
+                                                        username_form.classList.remove("uk-form-danger")
+                                                        username_form.classList.add("uk-form-success")
+                                                    }
+                                                    loading_overlay.hidden = true
+                                                })
+                                        } else {
+                                            uuid_form.setAttribute("value", "")
+                                            username_form.classList.remove("uk-form-success")
+                                            username_form.classList.remove("uk-form-danger")
+                                            loading_overlay.hidden = true
+                                        }
+                                    })
+                            } else {
+                                uuid_form.setAttribute("value", "")
+                                username_form.classList.remove("uk-form-success")
+                                username_form.classList.remove("uk-form-danger")
+                                loading_overlay.hidden = true
+                            }
+                        })
+                } else {
+                    loading_overlay.hidden = true
+                }
+            }, 500);
+            loading_overlay.hidden = true
+        });
+        loading_overlay.hidden = true
+    }
+    window.onload = function() {
+        fetchUUID()
+    }
+</script>

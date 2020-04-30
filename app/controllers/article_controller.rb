@@ -27,7 +27,6 @@ class ArticleController < ApplicationController
 
   def write
     category = params[:category]
-    logger.debug params
     write_at = Time.now
     article = Article.create(
       title: params['article#write'][:title],

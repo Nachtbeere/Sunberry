@@ -2,28 +2,73 @@
 <h1>접속</h1>
 <h2>서버 현황</h2>
 <div class="uk-child-width-expand@s uk-text-center uk-grid">
-  <div>
+
+  <div class="uk-grid-margin uk-first-column">
+
     <div class="uk-card uk-card-default uk-card-body">
       <div class="server">
         <div class="mainline">
-          <h3>메인 서버</h3>
+
+          <h3 class="uk-card-title">메인 서버</h3>
           <p class="server_url">connect.nachtbeere.net</p>
-          <p>Purifier 활용 서버 상태 뭐시기가 들어갈 자리</p>
+            <% if @health['mainline'] %>
+              <div class="uk-text-bold uk-text-primary">
+            <% else %>
+              <div class="uk-text-bold uk-text-danger">
+            <% end %>
+              <p><%= @health['mainline'] ? '접속 가능' : '접속 불가' %></p></div>
+            <div>
+              <span uk-icon="clock"></span>
+              <span><%= @health['mainline'] ? @system['mainline']['uptime'] : '확인 불가' %></span>
+            </div>
+            <div>
+              <span uk-icon="server"></span>
+              <span><%= @health['mainline'] ? @system['mainline']['memoryLoads'] : '확인 불가' %></span>
+            </div>
+            <div>
+              <span uk-icon="users"></span>
+              <span><%=  @health['mainline'] ? "#{@info['mainline']['currentPlayers']} / #{@info['mainline']['maxPlayers']}" : '확인 불가' %></span>
+            </div>
+
         </div>
       </div>
     </div>
-      </div>
-    <div>
+
+  </div>
+
+  <div class="uk-grid-margin uk-first-column">
+
     <div class="uk-card uk-card-default uk-card-body">
       <div class="server">
         <div class="nightly">
-          <h3>테스트 서버</h3>
+
+          <h3 class="uk-card-title">테스트 서버</h3>
           <p class="server_url">nightly.nachtbeere.net</p>
-          <p>Purifier 활용 서버 상태 뭐시기가 들어갈 자리</p>
+          <% if @health['nightly'] %>
+            <div class="uk-text-bold uk-text-primary">
+          <% else %>
+            <div class="uk-text-bold uk-text-danger">
+          <% end %>
+            <p><%= @health['nightly'] ? '접속 가능' : '접속 불가' %></p></div>
+          <div>
+            <span uk-icon="clock"></span>
+            <span><%= @health['nightly'] ? @system['nightly']['uptime'] : '확인 불가' %></span>
+          </div>
+          <div>
+            <span uk-icon="server"></span>
+            <span><%= @health['nightly'] ? @system['nightly']['memoryLoads'] : '확인 불가' %></span>
+          </div>
+          <div>
+            <span uk-icon="users"></span>
+            <span><%=  @health['nightly'] ? "#{@info['nightly']['currentPlayers']} / #{@info['nightly']['maxPlayers']}" : '확인 불가' %></span>
+          </div>
+
         </div>
       </div>
     </div>
+
   </div>
+
 </div>
 
 <h2>
