@@ -79,7 +79,7 @@ class UserController < ApplicationController
         )
         if user.save
           REDIS.set('email:' + user.confirmation_token, user.id.to_s)
-          UserMailer.with(user: user, token: user.confirmation_token).confirm_email.deliver_later
+          UserMailer.with(user: user, token: user.confirmation_token, root_url: root_url).confirm_email.deliver_later
           redirect_to '/', flash: { alert: '가입 되었습니다. 인증 메일을 확인해주세요' }
         else
           redirect_to '/sign-up', flash: { alert: '입력한 정보가 올바르지 않습니다' }
@@ -158,7 +158,7 @@ class UserController < ApplicationController
     user = User.find_by(email: params[:email])
     if user
       REDIS.set('password:' + user.confirmation_token, user.id.to_s)
-      UserMailer.with(user: user, token: user.confirmation_token).password_reset_email.deliver_later
+      UserMailer.with(user: user, token: user.confirmation_token, root_url: root_url).password_reset_email.deliver_later
       redirect_to '/', flash: { info: '비밀번호 재설정 메일을 보냈습니다' }
     else
       redirect_to '/', flash: { info: '존재하지 않는 계정입니다' }
@@ -166,8 +166,16 @@ class UserController < ApplicationController
   end
 
   def password_reset_page
-    @token = params[:token]
-    render 'user/password_reset'
+    if params.key?('token') && params[:token] != ''
+      password_token = 'password:' + params[:token]
+      user_id = REDIS.get(password_token)
+      redirect_to('/', flash: { alert: '인증 정보가 없습니다' }) && return unless user_id
+
+      @token = params[:token]
+      render 'user/password_reset'
+    else
+      redirect_to '/', flash: { alert: '잘못된 접근입니다' }
+    end
   end
 
   def password_reset
