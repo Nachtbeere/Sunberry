@@ -25,6 +25,9 @@ Rails.application.routes.draw do
   get 'sign-out', to: 'user#sign_out'
   get 'profile', to: 'user#profile_page'
   get 'verify-email', to: 'user#verify_email'
+  post 'password-reset', to: 'user#request_password_reset'
+  get 'password-reset', to: 'user#password_reset_page'
+  post 'password-reset-confirm', to: 'user#password_reset'
   post 'modify-password', to: 'user#modify_password'
   post 'modify-minecraft', to: 'user#modify_minecraft'
   post 'drop-out', to: 'user#drop_out'
@@ -33,6 +36,7 @@ Rails.application.routes.draw do
   post 'admin/mail-test', to: 'admin#mail_test'
   # api
   get 'api/nachtbeere/users/uuid/:uuid', to: 'user#duplicated_uuid?'
+  get 'api/nachtbeere/users/verified/:uuid', to: 'user#verified_uuid?'
   get 'api/minecraft/:server/server/health', to: 'api_minecraft#server_health'
   get 'api/minecraft/:server/server/info', to: 'api_minecraft#server_info'
   get 'api/minecraft/:server/server/system-info', to: 'api_minecraft#server_system_info'

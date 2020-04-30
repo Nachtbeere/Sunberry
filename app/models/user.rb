@@ -11,12 +11,12 @@ class User < ApplicationRecord
             length: { maximum: 256 },
             format: { with: VALID_EMAIL_REGEX },
             uniqueness: { case_sensitive: false }
-  validates_uniqueness_of :minecraft_uuid, allow_blank: true
   validates :minecraft_uuid,
-            uniqueness: { case_sensitive: false }
+            uniqueness: { case_sensitive: false, allow_blank: true }
   validates :password,
             format: { with: PASSWORD_REQUIREMENTS },
-            length: { minimum: 8 }
+            length: { minimum: 8 },
+            if: :password
   has_secure_password
 
   def admin?

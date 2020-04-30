@@ -3,56 +3,8 @@
         let terms_accpeted = document.getElementById("terms_accepted");
         terms_accpeted.setAttribute("value", String(!(String(true) === terms_accpeted.value)));
     }
-
-    function fetchUUID() {
-        let timeout = null;
-        let username_form  = document.getElementById('minecraft_username');
-        let uuid_form  = document.getElementById('minecraft_uuid');
-        let loading_overlay = document.getElementById('minecraft-loading');
-        loading_overlay.hidden = true
-        console.log("fetch init")
-        username_form.addEventListener('keyup', function (e) {
-            clearTimeout(timeout);
-            timeout = setTimeout(function () {
-                if (username_form.value.length > 3) {
-                    let username = username_form.value
-                    loading_overlay.hidden = false
-                    fetch("<%= root_url %>" + "api/minecraft/mainline/users/uuid/" + username)
-                        .then(response => {
-                            if (response.status >= 200 && response.status < 300) {
-                                response.json()
-                                .then(json => {
-                                    if (json !== null) {
-                                        fetch("<%= root_url %>" + "api/nachtbeere/users/uuid/" + json['id'])
-                                            .then(response => response.json())
-                                            .then(json => json['duplicated'])
-                                            .then(function (duplicated) {
-                                                if (duplicated) {
-                                                    username_form.classList.remove("uk-form-success")
-                                                    username_form.classList.add("uk-form-danger")
-                                                } else {
-                                                    uuid_form.setAttribute("value", json['id'])
-                                                    username_form.classList.remove("uk-form-danger")
-                                                    username_form.classList.add("uk-form-success")
-                                                }
-                                                loading_overlay.hidden = true
-                                            })
-                                    } else {
-                                        loading_overlay.hidden = true
-                                    }
-                                })
-                            } else {
-                                loading_overlay.hidden = true
-                            }
-                        })
-                }
-            }, 500);
-        });
-    }
-    window.onload = function() {
-        fetchUUID()
-    }
 </script>
+<%= render partial: 'api_minecraft/temp_minecraft_scripts' %>
 <% breadcrumb :sign_up %>
 <!--<div class="uk-width-medium uk-padding-small uk-position-z-index uk-scrollspy-inview uk-animation-fade" uk-scrollspy="cls: uk-animation-fade" style="">-->
 <div class="uk-text-center uk-margin">
@@ -90,7 +42,7 @@
         </div>
         <div class="uk-inline uk-width-expand">
           <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: lock"></span>
-          <%= password_field_tag :password, "", {placeholder: "영문 대소문자, 숫자, 특수문자 8자 이상", class: "uk-input uk-border-pill flex-placeholder", required: "required"} %>
+          <%= password_field_tag :password, "", {placeholder: "영문, 숫자, 특수문자 8자 이상", class: "uk-input uk-border-pill flex-placeholder", required: "required"} %>
         </div>
       </div>
     </div>
@@ -101,7 +53,7 @@
         </div>
         <div class="uk-inline uk-width-expand">
           <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: lock"></span>
-          <%= password_field_tag :password_confirmation, "", {placeholder: "영문 대소문자, 숫자, 특수문자 8자 이상", class: "uk-input uk-border-pill flex-placeholder", required: "required"} %>
+          <%= password_field_tag :password_confirmation, "", {placeholder: "영문, 숫자, 특수문자 8자 이상", class: "uk-input uk-border-pill flex-placeholder", required: "required"} %>
         </div>
       </div>
     </div>
