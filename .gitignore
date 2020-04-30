@@ -37,3 +37,10 @@ yarn-debug.log*
 .DS_Store
 .idea
 /config/config.yml
+
+/docker/data/db/*
+/docker/data/redis/*
+!/docker/data/db/.keep
+!/docker/data/redis/.keep
+
+*.key
