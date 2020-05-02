@@ -14,7 +14,7 @@
                     loading_overlay.hidden = false
                     fetch("<%= root_url %>" + "api/minecraft/mainline/users/uuid/" + username)
                         .then(response => {
-                            if (response.status >= 200 && response.status < 300) {
+                            if (response.status >= 200 && response.status < 400) {
                                 response.json()
                                     .then(json => {
                                         if (json !== null) {
