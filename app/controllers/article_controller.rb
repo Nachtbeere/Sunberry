@@ -10,6 +10,7 @@ class ArticleController < ApplicationController
     article_id = params[:id]
     begin
       @article = Article.find article_id
+      @article.punch(request)
       @board_name = ADDITIONAL_CONFIG['article_categories'][@article.category]
       if @board_name == 'notice'
         unless request.env['PATH_INFO'].include? @board_name
