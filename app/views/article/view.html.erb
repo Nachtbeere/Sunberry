@@ -1,6 +1,6 @@
 <% breadcrumb :article_view %>
 <h1><%= t(@board_name) %></h1>
-<h2><%= @article.tag %> | <%= @article.title %></h2>
+<h2><%= @article.title %></h2>
 <span class="uk-text-meta uk-margin-right"><span uk-icon="user"></span> <%= @article.user.username_identity %></span>
 <span class="uk-text-meta uk-margin-right"><span uk-icon="clock"></span> <%= @article.created_at.in_time_zone("Seoul").strftime("%F %T") %></span>
 <span class="uk-text-meta uk-margin-right"><span uk-icon="search"></span> <%= @article.hits %></span>
