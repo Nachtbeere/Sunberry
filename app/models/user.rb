@@ -39,4 +39,8 @@ class User < ApplicationRecord
   def confirmation_token
     @confirmation_token ||= SecureRandom.urlsafe_base64.to_s
   end
+
+  def self.get_by_page(page)
+    User.page(page).per(10).order(id: :desc).all
+  end
 end

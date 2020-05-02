@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   before_action :set_protocol if Rails.env.production?
 
   def set_protocol
-    Rails.application.routes.default_url_options[:protocol] = "https"
+    Rails.application.routes.default_url_options[:protocol] = 'https'
   end
 
   def current_user

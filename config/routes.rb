@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   post 'drop-out', to: 'user#drop_out'
   # admin
   get 'admin', to: 'admin#index'
+  get 'admin/users', to: 'admin#users'
   post 'admin/mail-test', to: 'admin#mail_test'
   # api
   get 'api/nachtbeere/users/uuid/:uuid', to: 'user#duplicated_uuid?'
