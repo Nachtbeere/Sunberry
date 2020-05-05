@@ -99,7 +99,8 @@ class Purifier
     puts e
     nil
   rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError,
-      Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError => e
+         Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError,
+         Errno::EHOSTUNREACH => e
     puts e
     nil
   end
