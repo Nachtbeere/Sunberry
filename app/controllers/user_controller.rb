@@ -17,7 +17,7 @@ class UserController < ApplicationController
       render json: { 'uuid': user.minecraft_uuid, 'verified': false }
     else
       # https://tools.ietf.org/html/rfc4122#section-4.1.7 nil uuid is zero
-      render json: { 'uuid': '00000000000000000000000000000000', 'verified': false }
+      render json: { 'uuid': '00000000000000000000000000000000', 'verified': false }, status: :not_found
     end
   end
 
