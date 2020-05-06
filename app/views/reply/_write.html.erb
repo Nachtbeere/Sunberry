@@ -1,1 +1,3 @@
-<%= render partial: 'reply/form' %>
+<% if current_user %>
+  <%= render partial: 'reply/form' %>
+<% end %>
