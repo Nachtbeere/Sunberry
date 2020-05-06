@@ -1,16 +1,16 @@
 <!-- Must be relocated to webpack later -->
 <script>
     function fetchUUID() {
+        let loading_overlay = document.getElementById('minecraft-loading');
+        loading_overlay.hidden = true
         let timeout = null;
         let username_form  = document.getElementById('minecraft_username');
         let uuid_form  = document.getElementById('minecraft_uuid');
-        let loading_overlay = document.getElementById('minecraft-loading');
         <% if Rails.env.production? %>
         let api_url = "<%= root_url(protocol: 'https') %>";
         <% else %>
         let api_url = "<%= root_url(protocol: 'http') %>";
         <% end %>
-        loading_overlay.hidden = true
         username_form.addEventListener('keyup', function (e) {
             clearTimeout(timeout);
             timeout = setTimeout(function () {
@@ -53,10 +53,12 @@
                             }
                         })
                 } else {
+                    uuid_form.setAttribute("value", "")
+                    username_form.classList.remove("uk-form-success")
+                    username_form.classList.remove("uk-form-danger")
                     loading_overlay.hidden = true
                 }
             }, 500);
-            loading_overlay.hidden = true
         });
         loading_overlay.hidden = true
     }
