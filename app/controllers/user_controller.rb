@@ -12,9 +12,12 @@ class UserController < ApplicationController
   def verified_uuid?
     user = User.find_by(minecraft_uuid: params[:uuid])
     if user&.is_verified
-      render json: { 'verified': true }
+      render json: { 'uuid': user.minecraft_uuid, 'verified': true }
+    elsif user&.is_verified == false
+      render json: { 'uuid': user.minecraft_uuid, 'verified': false }
     else
-      render json: { 'verified': false }
+      # https://tools.ietf.org/html/rfc4122#section-4.1.7 nil uuid is zero
+      render json: { 'uuid': '00000000000000000000000000000000', 'verified': false }
     end
   end
 
