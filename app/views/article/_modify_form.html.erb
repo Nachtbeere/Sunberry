@@ -1,10 +1,16 @@
 <script>
     function overrideArticle() {
         const element = document.querySelector("trix-editor");
-        let initContent = "<%= raw(@article.content.body.to_html.gsub('<div>', '').gsub('</div>', '')) %>";
+        let initContent = "<%= raw(@article.content.body.to_s
+                            .gsub('<div class="trix-content">', '')
+                            .gsub('</div>', '')
+                            .squish
+                            .gsub('"', '\"')
+                            ) %>";
         element.editor.insertHTML(initContent);
     }
     window.onload = function() {
+        // Trix.config.allowedAttributes =
         overrideArticle()
     }
 </script>
