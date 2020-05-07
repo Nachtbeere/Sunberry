@@ -1,7 +1,4 @@
 window.addEventListener("trix-file-accept", function(event) {
-    const acceptedTypes = ['image/jpeg', 'image/png']
-    if (!acceptedTypes.includes(event.file.type)) {
-        event.preventDefault()
-        alert("이미지 파일만 첨부할 수 있습니다")
-    }
+    event.preventDefault()
+    alert("현재 이미지 첨부 기능은 사용할 수 없습니다")
 })
