@@ -5,16 +5,16 @@ Rails.application.routes.draw do
   # board
   get 'notice', to: 'article#list', category: 'notice'
   get 'notice/write', to: 'article#write_page', category: 'notice'
-  get 'notice/modify', to: 'article#modify_page', category: 'notice'
+  get 'notice/:id/edit', to: 'article#modify_page', category: 'notice'
   get 'notice/:id', to: 'article#view'
   get 'board', to: 'article#list', category: 'general'
   get 'board/write', to: 'article#write_page', category: 'general'
-  get 'board/modify', to: 'article#modify_page', category: 'general'
+  get 'board/:id/edit', to: 'article#modify_page', category: 'general'
   get 'board/:id', to: 'article#view'
   post 'notice/write', to: 'article#write', category: 'notice'
   post 'board/write', to: 'article#write', category: 'general'
-  post 'notice/modify', to: 'article#modify', category: 'notice'
-  post 'board/modify', to: 'article#modify', category: 'general'
+  post 'notice/:id/edit', to: 'article#modify', category: 'notice'
+  post 'board/:id/edit', to: 'article#modify', category: 'general'
   post 'notice/:id', to: 'reply#write', category: 'notice'
   post 'board/:id', to: 'reply#write', category: 'board'
   # users
@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   post 'drop-out', to: 'user#drop_out'
   # admin
   get 'admin', to: 'admin#index'
+  get 'admin/users', to: 'admin#users'
   post 'admin/mail-test', to: 'admin#mail_test'
   # api
   get 'api/nachtbeere/users/uuid/:uuid', to: 'user#duplicated_uuid?'

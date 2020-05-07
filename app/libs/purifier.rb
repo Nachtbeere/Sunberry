@@ -10,11 +10,7 @@ class Purifier
 
   def self.get_from_mojang_api(endpoint)
     info = request_mojang_server(endpoint)
-    if info
-      info
-    else
-      nil
-    end
+    info || nil
   end
 
   def self.name_from_uuid(server, uuid)
@@ -100,6 +96,11 @@ class Purifier
       # resp = req.start do |http|
       #   http.request(req_path)
   rescue SocketError => e
+    puts e
+    nil
+  rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError,
+         Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError,
+         Errno::EHOSTUNREACH, Errno::ECONNREFUSED => e
     puts e
     nil
   end

@@ -1,10 +1,12 @@
 FROM ruby:2.7
-RUN apt-get update -qq && \
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" >> /etc/apt/sources.list.d/yarn.list && \
+    apt-get update -qq && \
 	apt-get install -y nodejs postgresql-client curl imagemagick yarn
 WORKDIR /srv
 COPY Gemfile /srv/Gemfile
 COPY Gemfile.lock /srv/Gemfile.lock
-RUN bundle install --without development test
+RUN bundle config set without 'development test' && bundle install
 COPY . /srv
 
 ENV RAILS_ENV production

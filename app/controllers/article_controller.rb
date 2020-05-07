@@ -10,6 +10,7 @@ class ArticleController < ApplicationController
     article_id = params[:id]
     begin
       @article = Article.find article_id
+      @article.punch(request)
       @board_name = ADDITIONAL_CONFIG['article_categories'][@article.category]
       if @board_name == 'notice'
         unless request.env['PATH_INFO'].include? @board_name
@@ -49,8 +50,40 @@ class ArticleController < ApplicationController
     params.require(:article).permit(:content)
   end
 
+  def modify_page
+    article_id = params[:id]
+    category = params[:category]
+    article = Article.find article_id
+    if !article.nil? && article.user_id == current_user.id
+      @article = article
+      render 'article/modify'
+    else
+      if category == 'notice'
+        redirect_to '/notice', flash: { alert: "존재하지 않는 글입니다" }
+      else
+        redirect_to '/board', flash: { alert: "존재하지 않는 글입니다" }
+      end
+    end
+  end
+
   def modify
-    render 'article/modify'
+    article_id = params[:id]
+    category = params[:category]
+    unless article_id.nil?
+      update_at = Time.now
+      article = Article.find article_id
+      if !article.nil? && article.user_id == current_user.id
+        article.title = params['article#modify'][:title]
+        article.content = params['article#modify'][:content]
+        article.updated_at = update_at
+        article.save
+      end
+    end
+    if category == 'notice'
+      redirect_to '/notice'
+    else
+      redirect_to '/board'
+    end
   end
 
 end

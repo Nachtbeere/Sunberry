@@ -6,6 +6,16 @@ class AdminController < ApplicationController
     render 'admin/index'
   end
 
+  def users
+    redirect_to('/') && return if current_user.nil?
+    redirect_to('/') && return unless current_user.admin?
+
+    page = params[:page] || 1
+    @users = User.get_by_page(page)
+
+    render 'admin/users'
+  end
+
   def mail_test
     UserMailer.with(user: current_user, token: 'test').confirm_email.deliver_now
   end

@@ -1,0 +1,29 @@
+<script>
+    function overrideArticle() {
+        const element = document.querySelector("trix-editor");
+        let initContent = "<%= raw(@article.content.body.to_s
+                            .gsub('<div class="trix-content">', '')
+                            .gsub('</div>', '')
+                            .squish
+                            .gsub('"', '\"')
+                            ) %>";
+        element.editor.insertHTML(initContent);
+    }
+    window.onload = function() {
+        // Trix.config.allowedAttributes =
+        overrideArticle()
+    }
+</script>
+<%= form_for 'article#modify' do |form| %>
+  <div class="field">
+    <div class="uk-margin">
+      <%= form.text_field :title, {value: @article.title, class: "uk-input", required: 'required'} %>
+    </div>
+    <div class="uk-margin">
+      <%= form.rich_text_area :content, {required: 'required', class: "uk-textarea", style: "min-height: 300px"} %>
+    </div>
+  </div>
+  <div>
+    <%= submit_tag "수정", {class: "uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom"} %>
+  </div>
+<% end %>
