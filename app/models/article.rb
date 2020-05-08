@@ -18,10 +18,6 @@ class Article < ApplicationRecord
 
   def self.latest(category)
     latest = Article.order(id: :desc).limit(5).where category: ADDITIONAL_CONFIG["article_categories"].find_index(category)
-    if latest.nil?
-      []
-    else
-      latest
-    end
+    latest.nil? ? [] : latest
   end
 end

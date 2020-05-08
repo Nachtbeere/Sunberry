@@ -9,6 +9,11 @@ class Oneline < ApplicationRecord
     Oneline.page(page).per(20).order(id: :desc).where(is_removed: false)
   end
 
+  def self.latest()
+    latest = Oneline.order(id: :desc).limit(5).all
+    latest.nil? ? [] : latest
+  end
+
   def self.duplicated?(author_id, content)
     Oneline.where(created_at: Time.now.utc.to_date.all_day).find_by(user_id: author_id, content: content)
   end
