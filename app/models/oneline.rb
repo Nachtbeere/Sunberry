@@ -19,7 +19,8 @@ class Oneline < ApplicationRecord
   end
 
   def self.need_cooldown?(author_id)
-    Oneline.limit(5).where(created_at: (Time.now.utc.to_datetime - 5.minutes)..Time.now.utc.to_datetime).find_by(user_id: author_id)
+    records = Oneline.limit(5).where(created_at: (Time.now.utc.to_datetime - 5.minutes)..Time.now.utc.to_datetime, user_id: author_id)
+    records&.many? && records.size == 5
   end
 
   def same_author?(author_id)
