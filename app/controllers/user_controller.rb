@@ -12,8 +12,10 @@ class UserController < ApplicationController
   def profile_image
     redirect_to('/sign-in', flash: { alert: '로그인 해주세요' }) && return if current_user.nil?
 
+    # puts params['avatar'].
     image = MiniMagick::Image.new(params['avatar'].tempfile.path)
     image.resize "200x200>"
+    params['avatar'].original_filename = current_user.username_hash
     current_user.avatar.attach(params['avatar'])
     current_user.save
     redirect_to('/profile', flash: { info: '프로필 사진이 등록되었습니다' })

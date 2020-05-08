@@ -37,6 +37,10 @@ class User < ApplicationRecord
     username + '(' + identity + ')'
   end
 
+  def username_hash
+    Digest::MD5.hexdigest(username)[0, 12]
+  end
+
   def identity_colour
     '#' + Digest::MD5.hexdigest(username)[0, 6]
   end
