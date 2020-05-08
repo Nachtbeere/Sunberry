@@ -43,9 +43,9 @@
           <% end %>
         </div>
         <div class="uk-width-expand uk-padding-remove-left">
-          <header class="uk-comment-header uk-grid uk-padding-remove uk-grid">
-            <div class="uk-width-expand uk-inline uk-comment-title-modified uk-width-oneline-username"><%= oneline.user.username_identity %></div>
-            <div class="uk-text-right uk-padding-remove-left uk-inline uk-comment-meta-modified uk-width-oneline-datetime"><%= oneline.created_at.in_time_zone("Seoul").strftime("%F %T") %></div>
+          <header class="uk-comment-header-oneline uk-grid uk-padding-remove uk-grid">
+            <div class="uk-width-expand uk-inline uk-comment-title-modified uk-width-oneline-username uk-text-bold uk-text-middle"><%= oneline.user.username_identity %></div>
+            <div class="uk-text-right uk-padding-remove-left uk-inline uk-comment-meta-modified uk-width-oneline-datetime uk-text-middle"><%= oneline.created_at.in_time_zone("Seoul").strftime("%F %T") %></div>
           </header>
           <div class="uk-comment-body"><%= oneline.content %></div>
         </div>

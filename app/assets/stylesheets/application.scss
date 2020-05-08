@@ -138,7 +138,7 @@ p span.do_not_display {
 
 .uk-comment-title-modified {
   @extend .uk-comment-title;
-
+  font-size: 0.95rem;
 }
 
 .uk-comment-meta-modified {
@@ -151,4 +151,8 @@ p span.do_not_display {
 
 .uk-width-oneline-datetime {
   width: 150px;
+}
+
+.uk-comment-header-oneline {
+  margin-bottom: 5px;
 }
