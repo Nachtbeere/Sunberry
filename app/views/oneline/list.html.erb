@@ -17,9 +17,16 @@
   <%= form_for '/oneline', url: {action: 'create'}, html: {multipart: true, class: "toggle-class"} do %>
     <fieldset class="uk-fieldset">
       <div class="uk-margin-small">
+        <div class="uk-inline uk-width-1-1" uk-form-custom="target: true">
+          <%= file_field_tag :images, name: 'images[]', accept: 'image/png,image/gif,image/jpeg', multiple: true %>
+          <input class="uk-input" type="text" placeholder="이미지는 최대 4 장 까지" disabled>
+          <span class="uk-form-icon uk-form-icon-flip uk-icon" uk-icon="icon: file"></span>
+        </div>
+      </div>
+      <div class="uk-margin-small">
         <div class="uk-inline uk-width-1-1">
           <span class="uk-form-icon uk-form-icon-flip uk-icon" uk-icon="icon: comment"></span>
-          <%= text_area_tag :content, "", {placeholder: "280자까지", class: "uk-textarea", required: "required"} %>
+          <%= text_area_tag :content, "", {placeholder: "글은 최대 280자까지", class: "uk-textarea", required: "required"} %>
         </div>
       </div>
       <div class="uk-text-right">
@@ -48,6 +55,15 @@
             <div class="uk-text-right uk-padding-remove-left uk-inline uk-comment-meta-modified uk-width-oneline-datetime uk-text-middle"><%= oneline.created_at.in_time_zone("Seoul").strftime("%F %T") %></div>
           </header>
           <div class="uk-comment-body"><%= oneline.content %></div>
+          <% if oneline.images.attached? %>
+            <div class="uk-grid-medium uk-child-width-expand@s" uk-grid>
+            <% oneline.images.each do |image| %>
+            <div class="uk-width-1-2">
+              <%= image_tag(image_url(url_for(image)), class: "uk-card uk-card-default uk-card-body oneline-image-box") %>
+            </div>
+              <% end %>
+            </div>
+          <% end %>
         </div>
       </div>
     </article>

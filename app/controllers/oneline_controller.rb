@@ -12,13 +12,20 @@ class OnelineController < ApplicationController
       redirect_to '/oneline', flash: { alert: '이미 작성한 글입니다' }
     elsif Oneline.need_cooldown?(current_user.id)
       redirect_to '/oneline', flash: { alert: '너무 자주 작성했습니다' }
+    elsif Oneline.attachment_overflow?(params[:images])
+      redirect_to '/oneline', flash: { alert: '첨부파일이 너무 많아요!' }
+    elsif Oneline.attachment_overload?(params[:images])
+      redirect_to '/oneline', flash: { alert: '첨부파일이 너무 커요!' }
     else
       write_at = Time.now
       oneline = Oneline.create(
         content: params[:content],
         user_id: current_user.id,
-        created_at: write_at)
-      oneline.images.attach(params[:images]) unless params[:image].nil?
+        created_at: write_at
+      )
+      params[:images]&.each do |image|
+        oneline.images.attach(Oneline.convert_image(image))
+      end
       if oneline.save
         redirect_to '/oneline', flash: { info: '작성했습니다' }
       elsif params[:content].length > 280

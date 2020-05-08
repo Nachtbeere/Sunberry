@@ -1,3 +1,16 @@
 // Place all the styles related to the oneline controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+.oneline-image-box {
+  border-radius: 5%;
+  margin-right: 10px;
+  padding: 5px !important;
+}
+
+img.oneline-image-box {
+  height: 100%;
+  box-sizing: border-box;
+  max-width: 100%;
+  max-height: 100%;
+  width: 100%;
+}

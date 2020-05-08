@@ -23,7 +23,24 @@ class Oneline < ApplicationRecord
     records&.many? && records.size == 5
   end
 
+  def self.attachment_overflow?(files)
+    files.size > 4 unless files.nil?
+  end
+
+  def self.attachment_overload?(files)
+    files&.each do |file|
+      return File.size(file.tempfile.path) > 2_097_152
+    end
+  end
+
   def same_author?(author_id)
     user_id == author_id
+  end
+
+  def self.convert_image(image)
+    resize = MiniMagick::Image.new(image.tempfile.path)
+    resize.resize "500x500>"
+    image.original_filename = new_filename(image)
+    image
   end
 end
