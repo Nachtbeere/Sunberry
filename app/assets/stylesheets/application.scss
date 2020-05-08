@@ -67,6 +67,23 @@ body {
     width: 60px !important;
     height: 60px !important;
   }
+
+  .uk-width-xxsmall {
+    width: 60px !important;
+    padding-left: 10px;
+  }
+
+  .hidden-on-small {
+    white-space: nowrap;
+    overflow: hidden;
+    word-break: break-word;
+  }
+
+
+}
+
+.datetime-meta-small {
+  font-size: 0.675rem;
 }
 
 span.site_logo {
@@ -115,6 +132,11 @@ p span.do_not_display {
 
 .uk-width-xsmall {
   @extend .uk-width-small;
+  width: 100px;
+}
+
+.uk-width-xsmall\@m {
+  @extend .uk-width-small\@m;
   width: 100px;
 }
 

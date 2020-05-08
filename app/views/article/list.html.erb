@@ -2,24 +2,20 @@
 <h1><%= t(@board_name) %></h1>
 <ul class="uk-list uk-list-divider">
  <li>
-   <div class="uk-grid">
+   <div class="uk-grid" style="padding-left: 0">
      <div class="uk-inline uk-width-expand">제목</div>
-     <div class="uk-inline uk-width-xsmall">작성자</div>
-     <div class="uk-inline uk-width-small">작성일</div>
-     <div class="uk-inline uk-width-xsmall">조회수</div>
+     <div class="uk-inline uk-width-small@m uk-width-1-5 uk-text-right">작성자</div>
+     <div class="uk-inline uk-width-small@m uk-width-1-5 uk-text-right">작성일</div>
+     <div class="uk-inline uk-width-xsmall@m uk-width-xxsmall uk-text-right">조회수</div>
    </div>
  </li>
 <% unless @articles.each do |article| %>
   <li>
     <div class="uk-grid">
-      <% if article.category == ADDITIONAL_CONFIG["article_categories"].find_index("notice") %>
-        <div class="uk-inline uk-width-expand title"><%=  link_to article.title, "notice/#{article.id}"  %></div>
-        <% else %>
-        <div class="uk-inline uk-width-expand title"><%=  link_to article.title, "board/#{article.id}"  %></div>
-      <% end %>
-      <div class="uk-inline uk-width-xsmall uk-text-meta"><%=  article.user.username  %></div>
-      <div class="uk-inline uk-width-small uk-text-meta" style="overflow: hidden"><%=  article.created_at.in_time_zone("Seoul").strftime("%F %T")  %></div>
-      <div class="uk-inline uk-width-xsmall uk-text-meta"> <%=  article.hits  %></div>
+      <div class="uk-inline uk-width-expand title"><%=  link_to article.title, "notice/#{article.id}"  %></div>
+      <div class="uk-inline uk-width-small@m uk-width-1-5 uk-text-meta uk-text-right"><%=  article.user.username  %></div>
+      <div class="uk-inline uk-width-small@m uk-width-1-5 uk-text-meta uk-text-right hidden-on-small datetime-meta-small"><%=  article.created_at.in_time_zone("Seoul").strftime("%F %T")  %></div>
+      <div class="uk-inline uk-width-xsmall@m uk-width-xxsmall uk-text-meta uk-text-right"> <%=  article.hits  %></div>
     </div>
   </li>
   <%  end  %>
@@ -32,10 +28,6 @@
     <div class="uk-text-right">
     <% if @board_name == ADDITIONAL_CONFIG["article_categories"][0] && current_user != nil && current_user.admin? %>
       <%= link_to "글쓰기", '/' + ADDITIONAL_CONFIG["article_categories"][0] + '/write', method: :get, category: @board_name, class: "uk-button uk-button-danger uk-margin-small-bottom toggle-class" %>
-    <% else %>
-      <% if current_user != nil && @board_name != ADDITIONAL_CONFIG["article_categories"][0] %>
-        <%= link_to "글쓰기", '/board/write', method: :get, category: @board_name, class: "uk-button uk-button-default uk-margin-small-bottom toggle-class uk-align-right" %>
-      <% end %>
     <% end %>
     </div>
   </div>
