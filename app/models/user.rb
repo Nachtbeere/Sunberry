@@ -40,6 +40,18 @@ class User < ApplicationRecord
     @confirmation_token ||= SecureRandom.urlsafe_base64.to_s
   end
 
+  def verified?
+    is_verified
+  end
+
+  def self.duplicated_uuid?(uuid)
+    find_by(minecraft_uuid: uuid)
+  end
+
+  def get_minecraft_uuid
+    minecraft_uuid.blank? ? '00000000000000000000000000000000' : minecraft_uuid
+  end
+
   def self.get_by_page(page)
     User.page(page).per(10).order(id: :desc).all
   end

@@ -1,15 +1,10 @@
 class UserController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:sign_in_page, :sign_up_page]
-  def duplicated_uuid?
-    user = User.find_by(minecraft_uuid: params[:uuid])
-    if user
-      render json: { 'duplicated': true }
-    else
-      render json: { 'duplicated': false }
-    end
+  def minecraft_uuid_duplicate_check
+    render json: { 'duplicated': User.duplicated_uuid?(params[:uuid]) }
   end
 
-  def verified_uuid?
+  def minecraft_uuid_verified_check
     user = User.find_by(minecraft_uuid: params[:uuid])
     if user&.is_verified
       render json: { 'uuid': user.minecraft_uuid, 'verified': true }
