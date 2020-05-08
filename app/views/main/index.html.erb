@@ -15,7 +15,10 @@
     </div>
   </div>
   <div>
-    <h2>게시판</h2>
+    <div class="header-with-option">
+      <h2 class="uk-text-left">게시판</h2>
+      <a href="<%= url_for"oneline" %>" style="margin: 18px" class="uk-text-right uk-text-bottom" uk-icon="icon: more"></a>
+    </div>
     <div class="uk-card uk-card-default uk-card-body" style="min-height: 180px">
       <% unless @onelines.each do |article| %>
         <li>

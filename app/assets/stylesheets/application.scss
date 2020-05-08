@@ -150,3 +150,9 @@ p span.do_not_display {
   height:auto;
   width:50%;
 }
+
+.header-with-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
