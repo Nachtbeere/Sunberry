@@ -1,6 +1,29 @@
 // Place all the styles related to the oneline controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+@media(max-width:960px) {
+  .uk-width-oneline-username {
+    width: 150px;
+  }
+
+  .uk-width-oneline-datetime {
+    width: 80px !important;
+  }
+}
+
+.uk-width-oneline-username {
+  min-width: 1px;
+}
+
+.uk-width-oneline-datetime {
+  width: 150px;
+}
+
+.uk-comment-header-oneline {
+  margin-bottom: 5px;
+}
+
 .oneline-image-box {
   border-radius: 5%;
   margin-right: 10px;
