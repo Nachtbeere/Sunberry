@@ -2,12 +2,22 @@
 <% unless @article.replies.each do |reply| %>
   <li>
     <article class="uk-comment">
-      <header class="uk-comment-header">
-<!--        <img class="uk-comment-avatar" src="" alt="">-->
-        <span class="uk-comment-title"><%= reply.user.username_identity %></span>
-        <span class="uk-comment-meta"><%= reply.created_at.in_time_zone("Seoul").strftime("%F %T") %></span>
-      </header>
-      <div class="uk-comment-body"><%= reply.content %></div>
+      <div class="uk-grid">
+        <div class="uk-width-auto">
+          <% if reply.user.avatar.attached? %>
+            <%= image_tag(image_url(url_for(reply.user.avatar)), class: "uk-comment-avatar-modified") %>
+            <% else %>
+            <div class="uk-comment-avatar-modified" style="background-color: <%= reply.user.identity_colour %>" ></div>
+          <% end %>
+        </div>
+        <div class="uk-width-expand uk-padding-remove-left">
+          <header class="uk-comment-header">
+            <span class="uk-comment-title"><%= reply.user.username_identity %></span>
+            <span class="uk-comment-meta"><%= reply.created_at.in_time_zone("Seoul").strftime("%F %T") %></span>
+          </header>
+          <div class="uk-comment-body"><%= reply.content %></div>
+        </div>
+      </div>
     </article>
   </li>
   <% end %>

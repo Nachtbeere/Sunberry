@@ -1,0 +1,48 @@
+<% breadcrumb :oneline %>
+<h1>게시판</h1>
+<div>
+  <%= form_for '/oneline', url: {action: 'create'}, html: {multipart: true, class: "toggle-class"} do %>
+    <fieldset class="uk-fieldset">
+      <div class="uk-margin-small">
+        <div class="uk-inline uk-width-1-1">
+          <span class="uk-form-icon uk-form-icon-flip uk-icon" uk-icon="icon: comment"></span>
+          <%= text_area_tag :content, "", {placeholder: "280자까지", class: "uk-textarea", required: "required"} %>
+        </div>
+      </div>
+      <div class="uk-text-right">
+        <%= submit_tag "작성", {class: "uk-button uk-button-primary"} %>
+      </div>
+    </fieldset>
+    </div>
+
+  <% end %>
+<ul class="uk-list uk-list-divider">
+  <% unless @onelines.each do |oneline| %>
+    <li>
+    <article class="uk-comment">
+      <div class="uk-grid">
+        <div class="uk-width-auto">
+          <% if oneline.user.avatar.attached? %>
+            <%= image_tag(image_url(url_for(oneline.user.avatar)), class: "uk-comment-avatar-modified") %>
+          <% else %>
+            <div class="uk-comment-avatar-modified" style="background-color: <%= oneline.user.identity_colour %>" ></div>
+          <% end %>
+        </div>
+        <div class="uk-width-expand uk-padding-remove-left">
+          <header class="uk-comment-header">
+            <span class="uk-comment-title"><%= oneline.user.username_identity %></span>
+            <span class="uk-comment-meta"><%= oneline.created_at.in_time_zone("Seoul").strftime("%F %T") %></span>
+          </header>
+          <div class="uk-comment-body"><%= oneline.content %></div>
+        </div>
+      </div>
+    </article>
+    </li>
+  <%  end  %>
+  <%  end %>
+</ul>
+<div class="uk-grid" uk-grid>
+  <div class="uk-width-1-3"></div>
+  <div class="uk-width-1-3"><%= paginate @onelines %></div>
+  <div class="uk-width-1-3"></div>
+</div>

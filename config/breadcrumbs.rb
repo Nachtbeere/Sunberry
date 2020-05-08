@@ -27,6 +27,11 @@ crumb :about do
   parent :root
 end
 
+crumb :oneline do
+  link '게시판', (url_for '/oneline')
+  parent :about
+end
+
 crumb :article_list do
   parent :about
   if request.env['PATH_INFO'].include? '/notice'

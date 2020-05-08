@@ -18,6 +18,7 @@ class User < ApplicationRecord
             length: { minimum: 6 },
             if: :password
   has_secure_password
+  has_one_attached :avatar
 
   def admin?
     role == ROLES[:admin]
@@ -34,6 +35,10 @@ class User < ApplicationRecord
 
   def username_identity
     username + '(' + identity + ')'
+  end
+
+  def identity_colour
+    '#' + Digest::MD5.hexdigest(username)[0, 6]
   end
 
   def confirmation_token
