@@ -29,7 +29,7 @@ class Oneline < ApplicationRecord
 
   def self.attachment_overload?(files)
     files&.each do |file|
-      return File.size(file.tempfile.path) > 2_097_152
+      return File.size(file.tempfile.path) > 5_242_880
     end
   end
 
