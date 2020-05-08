@@ -44,6 +44,28 @@ body {
   input.flex-placeholder::placeholder {
     font-size: 12px;
   }
+
+  .uk-width-oneline-username {
+    width: 150px;
+  }
+
+  .uk-width-oneline-datetime {
+    width: 80px !important;
+  }
+
+  .uk-comment-title-modified {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .uk-comment-meta-modified {
+    font-size: 0.65rem;
+    line-height: 1.4;
+    color: #999;
+  }
 }
 
 span.site_logo {
@@ -109,7 +131,24 @@ p span.do_not_display {
   float: left;
 }
 
-.uk-comment-avatar-modified{
+.uk-comment-avatar-modified {
   @extend .uk-comment-avatar;
   @extend .user-profile-image;
+}
+
+.uk-comment-title-modified {
+  @extend .uk-comment-title;
+
+}
+
+.uk-comment-meta-modified {
+  @extend .uk-comment-meta;
+}
+
+.uk-width-oneline-username {
+  min-width: 1px;
+}
+
+.uk-width-oneline-datetime {
+  width: 150px;
 }
