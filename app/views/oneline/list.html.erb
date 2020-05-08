@@ -58,7 +58,7 @@
           <% if oneline.images.attached? %>
             <div class="uk-grid-medium uk-child-width-expand@s" uk-grid>
             <% oneline.images.each do |image| %>
-            <div class="uk-width-1-2">
+            <div class="uk-width-1-2@l uk-width-1-1@m">
               <%= image_tag(image_url(url_for(image)), class: "uk-card uk-card-default uk-card-body oneline-image-box") %>
             </div>
               <% end %>
