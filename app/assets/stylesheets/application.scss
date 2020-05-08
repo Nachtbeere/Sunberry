@@ -66,6 +66,10 @@ body {
     line-height: 1.4;
     color: #999;
   }
+
+  .minecraft-period-image {
+    width: 100% !important;
+  }
 }
 
 span.site_logo {
@@ -155,4 +159,9 @@ p span.do_not_display {
 
 .uk-comment-header-oneline {
   margin-bottom: 5px;
+}
+
+.minecraft-period-image {
+  height:auto;
+  width:50%;
 }
