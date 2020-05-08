@@ -27,6 +27,8 @@ class ArticleController < ApplicationController
   end
 
   def write
+    redirect_to('/sign-in', flash: { alert: '로그인 해주세요' }) && return if current_user.nil?
+
     category = params[:category]
     write_at = Time.now
     article = Article.create(
@@ -51,6 +53,8 @@ class ArticleController < ApplicationController
   end
 
   def modify_page
+    redirect_to('/sign-in', flash: { alert: '로그인 해주세요' }) && return if current_user.nil?
+
     article_id = params[:id]
     category = params[:category]
     article = Article.find article_id
@@ -67,6 +71,8 @@ class ArticleController < ApplicationController
   end
 
   def modify
+    redirect_to('/sign-in', flash: { alert: '로그인 해주세요' }) && return if current_user.nil?
+
     article_id = params[:id]
     category = params[:category]
     unless article_id.nil?

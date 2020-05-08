@@ -6,6 +6,8 @@ class OnelineController < ApplicationController
   end
 
   def create
+    redirect_to('/sign-in', flash: { alert: '로그인 해주세요' }) && return if current_user.nil?
+
     if Oneline.duplicated?(current_user.id, params[:content])
       redirect_to '/oneline', flash: { alert: '이미 작성한 글입니다' }
     elsif Oneline.need_cooldown?(current_user.id)
