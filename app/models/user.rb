@@ -45,6 +45,18 @@ class User < ApplicationRecord
     '#' + Digest::MD5.hexdigest(username)[0, 6]
   end
 
+  def add_profile_image(profile_image)
+    image = convert_profile_image(profile_image)
+    avatar.attach(image)
+  end
+
+  def convert_profile_image(profile_image)
+    image = MiniMagick::Image.new(profile_image.tempfile.path)
+    image.resize "200x200>"
+    profile_image.original_filename = username_hash + extract_extension(profile_image.tempfile.path)
+    profile_image
+  end
+
   def confirmation_token
     @confirmation_token ||= SecureRandom.urlsafe_base64.to_s
   end
