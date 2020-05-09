@@ -3,6 +3,7 @@ class Oneline < ApplicationRecord
   has_many_attached :images
   validates :content,
             presence: true,
+            allow_blank: false,
             length: { maximum: 280 }
 
   def self.get_by_page(page)

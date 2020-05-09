@@ -5,6 +5,7 @@ class User < ApplicationRecord
   PASSWORD_REQUIREMENTS = /\A(?=.{6,})(?=.*\d)(?=.*[a-z])/x.freeze
   validates :username,
             presence: true,
+            allow_blank: false,
             length: { maximum: 32 }
   validates :email,
             presence: true,
