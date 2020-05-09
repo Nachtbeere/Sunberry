@@ -49,7 +49,12 @@ class Purifier
   private
 
   def self.request_url(target_server, endpoint)
-    URI.join ADDITIONAL_CONFIG['purifier_api']['host'][target_server],
+    target = if target_server == 'mainline'
+      'mainline_survival'
+             else
+      target_server
+             end
+    URI.join ADDITIONAL_CONFIG['purifier_api']['host'][target],
              request_endpoint(endpoint)
   end
 
