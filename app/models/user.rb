@@ -5,6 +5,7 @@ class User < ApplicationRecord
   PASSWORD_REQUIREMENTS = /\A(?=.{6,})(?=.*\d)(?=.*[a-z])/x.freeze
   validates :username,
             presence: true,
+            allow_blank: false,
             length: { maximum: 32 }
   validates :email,
             presence: true,
@@ -18,6 +19,7 @@ class User < ApplicationRecord
             length: { minimum: 6 },
             if: :password
   has_secure_password
+  has_one_attached :avatar
 
   def admin?
     role == ROLES[:admin]
@@ -36,8 +38,40 @@ class User < ApplicationRecord
     username + '(' + identity + ')'
   end
 
+  def username_hash
+    Digest::MD5.hexdigest(username)[0, 12]
+  end
+
+  def identity_colour
+    '#' + Digest::MD5.hexdigest(username)[0, 6]
+  end
+
+  def add_profile_image(profile_image)
+    image = convert_profile_image(profile_image)
+    avatar.attach(image)
+  end
+
+  def convert_profile_image(profile_image)
+    image = MiniMagick::Image.new(profile_image.tempfile.path)
+    image.resize "200x200>"
+    profile_image.original_filename = username_hash + extract_extension(profile_image.tempfile.path)
+    profile_image
+  end
+
   def confirmation_token
     @confirmation_token ||= SecureRandom.urlsafe_base64.to_s
+  end
+
+  def verified?
+    is_verified
+  end
+
+  def self.duplicated_uuid?(uuid)
+    find_by(minecraft_uuid: uuid)
+  end
+
+  def get_minecraft_uuid
+    minecraft_uuid.blank? ? '00000000000000000000000000000000' : minecraft_uuid
   end
 
   def self.get_by_page(page)

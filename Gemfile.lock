@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/TitovDigital/activestorage-database-service.git
+  revision: f04c537f6a6c2cafe90d37845bce7310d2ed5bf0
+  specs:
+    activestorage-database-service (1.0.0)
+      rails (>= 5.2.1.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -245,6 +252,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activestorage-database-service!
   bcrypt (~> 3.1.7)
   bootsnap (>= 1.4.2)
   byebug
@@ -266,6 +274,7 @@ DEPENDENCIES
   selenium-webdriver
   spring
   spring-watcher-listen (~> 2.0.0)
+  sprockets-rails
   turbolinks (~> 5)
   tzinfo-data
   web-console (>= 3.3.0)

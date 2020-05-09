@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_29_064222) do
+ActiveRecord::Schema.define(version: 2020_05_08_161836) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,14 @@ ActiveRecord::Schema.define(version: 2020_04_29_064222) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "active_storage_data", force: :cascade do |t|
+    t.string "key", null: false
+    t.binary "io", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_active_storage_data_on_key"
+  end
+
   create_table "articles", force: :cascade do |t|
     t.integer "user_id"
     t.string "title"
@@ -54,6 +62,13 @@ ActiveRecord::Schema.define(version: 2020_04_29_064222) do
     t.integer "tag"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "onelines", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "content"
+    t.datetime "created_at"
+    t.boolean "is_removed", default: false
   end
 
   create_table "punches", id: :serial, force: :cascade do |t|

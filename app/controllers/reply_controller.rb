@@ -1,5 +1,7 @@
 class ReplyController < ApplicationController
   def write
+    redirect_to('/sign-in', flash: { alert: '로그인 해주세요' }) && return if current_user.nil?
+
     reply = Reply.create(
       article_id: params[:id],
       user_id: current_user.id,

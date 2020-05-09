@@ -44,6 +44,46 @@ body {
   input.flex-placeholder::placeholder {
     font-size: 12px;
   }
+
+  .uk-comment-title-modified {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .uk-comment-meta-modified {
+    font-size: 0.65rem;
+    line-height: 1.4;
+    color: #999;
+  }
+
+  .minecraft-period-image {
+    width: 100% !important;
+  }
+
+  .user-profile-image {
+    width: 60px !important;
+    height: 60px !important;
+  }
+
+  .uk-width-xxsmall {
+    width: 60px !important;
+    padding-left: 10px;
+  }
+
+  .hidden-on-small {
+    white-space: nowrap;
+    overflow: hidden;
+    word-break: break-word;
+  }
+
+
+}
+
+.datetime-meta-small {
+  font-size: 0.675rem;
 }
 
 span.site_logo {
@@ -95,8 +135,46 @@ p span.do_not_display {
   width: 100px;
 }
 
+.uk-width-xsmall\@m {
+  @extend .uk-width-small\@m;
+  width: 100px;
+}
+
 .title {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.user-profile-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-right: 10px;
+  float: left;
+}
+
+.uk-comment-avatar-modified {
+  @extend .uk-comment-avatar;
+  @extend .user-profile-image;
+}
+
+.uk-comment-title-modified {
+  @extend .uk-comment-title;
+  font-size: 0.95rem;
+}
+
+.uk-comment-meta-modified {
+  @extend .uk-comment-meta;
+}
+
+.minecraft-period-image {
+  height:auto;
+  width:50%;
+}
+
+.header-with-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
 }

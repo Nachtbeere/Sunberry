@@ -1,24 +1,18 @@
 class UserController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:sign_in_page, :sign_up_page]
-  def duplicated_uuid?
-    user = User.find_by(minecraft_uuid: params[:uuid])
-    if user
-      render json: { 'duplicated': true }
-    else
-      render json: { 'duplicated': false }
-    end
+
+  def profile_page
+    redirect_to('/sign-in', flash: { alert: '로그인 해주세요' }) && return if current_user.nil?
+
+    render 'user/profile'
   end
 
-  def verified_uuid?
-    user = User.find_by(minecraft_uuid: params[:uuid])
-    if user&.is_verified
-      render json: { 'uuid': user.minecraft_uuid, 'verified': true }
-    elsif user&.is_verified == false
-      render json: { 'uuid': user.minecraft_uuid, 'verified': false }
-    else
-      # https://tools.ietf.org/html/rfc4122#section-4.1.7 nil uuid is zero
-      render json: { 'uuid': '00000000000000000000000000000000', 'verified': false }, status: :not_found
-    end
+  def profile_image
+    redirect_to('/sign-in', flash: { alert: '로그인 해주세요' }) && return if current_user.nil?
+
+    current_user.add_profile_image(params['avatar'])
+    current_user.save
+    redirect_to('/profile', flash: { info: '프로필 사진이 등록되었습니다' })
   end
 
   def sign_in_page
@@ -73,7 +67,7 @@ class UserController < ApplicationController
           email: params[:email],
           password: params[:password],
           password_confirmation: params[:password_confirmation],
-          username: params[:username],
+          username: User.remove_whitelist_like_strings(params[:username]),
           minecraft_username: params[:minecraft_username],
           minecraft_uuid: params[:minecraft_uuid],
           role: User::ROLES[:general],
@@ -115,12 +109,6 @@ class UserController < ApplicationController
     end
   end
 
-  def profile_page
-    redirect_to('/sign-in', flash: { alert: '로그인 해주세요' }) && return if current_user.nil?
-
-    render 'user/profile'
-  end
-
   def modify_password
     redirect_to('/sign-in', flash: { alert: '로그인 해주세요' }) && return if current_user.nil?
 
@@ -154,6 +142,22 @@ class UserController < ApplicationController
       redirect_to '/profile', flash: { info: '마인크래프트 정보가 변경되었습니다' }
     else
       redirect_to '/profile', flash: { alert: '마인크래프트 정보 변경에 실패했습니다' }
+    end
+  end
+
+  def minecraft_uuid_duplicate_check
+    render json: { 'duplicated': User.duplicated_uuid?(params[:uuid]) }
+  end
+
+  def minecraft_uuid_verified_check
+    user = User.find_by(minecraft_uuid: params[:uuid])
+    if user&.is_verified
+      render json: { 'uuid': user.minecraft_uuid, 'verified': true }
+    elsif user&.is_verified == false
+      render json: { 'uuid': user.minecraft_uuid, 'verified': false }
+    else
+      # https://tools.ietf.org/html/rfc4122#section-4.1.7 nil uuid is zero
+      render json: { 'uuid': '00000000000000000000000000000000', 'verified': false }, status: :not_found
     end
   end
 

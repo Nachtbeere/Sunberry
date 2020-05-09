@@ -2,6 +2,14 @@
 <h1>회원 정보</h1>
 
 <ul class="uk-list uk-list-divider">
+  <% if current_user.avatar.attached? %>
+    <li>
+      <div class="uk-grid">
+        <div class="uk-inline uk-width-small">프로필 사진</div>
+        <div class="uk-inline uk-width-expand"><%= image_tag(image_url(url_for(current_user.avatar)), class: "user-profile-image") %></div>
+      </div>
+    </li>
+  <% end %>
   <li>
     <div class="uk-grid">
       <div class="uk-inline uk-width-small">유저네임</div>
@@ -14,7 +22,7 @@
       <div class="uk-inline uk-width-expand"><%= current_user.email %></div>
     </div>
   </li>
-  <% if current_user.minecraft_username != "" %>
+  <% unless current_user.minecraft_username.blank? %>
     <li>
       <div class="uk-grid">
         <div class="uk-inline uk-width-small">마인크래프트</div>
@@ -36,10 +44,15 @@
   </li>
 </ul>
 <div>
-  <% if current_user.minecraft_username != "" %>
-    <button class="uk-button uk-button-default uk-margin-small-right" uk-toggle="target: #minecraft-info" type="button">마인크래프트 정보 변경</button>
-  <% else %>
+  <% if current_user.minecraft_username.blank? %>
     <button class="uk-button uk-button-default uk-margin-small-right" uk-toggle="target: #minecraft-info" type="button">마인크래프트 정보 등록</button>
+  <% else %>
+    <button class="uk-button uk-button-default uk-margin-small-right" uk-toggle="target: #minecraft-info" type="button">마인크래프트 정보 변경</button>
+  <% end %>
+  <% if current_user.avatar.attached? %>
+    <button class="uk-button uk-button-default uk-margin-small-right" uk-toggle="target: #profile-image" type="button">프로필 사진 변경</button>
+  <% else %>
+    <button class="uk-button uk-button-default uk-margin-small-right" uk-toggle="target: #profile-image" type="button">프로필 사진 등록</button>
   <% end %>
   <button class="uk-button uk-button-default uk-margin-small-right" uk-toggle="target: #modify-password" type="button">비밀번호 변경</button>
   <button class="uk-button uk-button-danger uk-margin-small-right" uk-toggle="target: #drop-out" type="button">회원 탈퇴</button>
@@ -48,10 +61,10 @@
 <!-- This is the modal -->
 <div id="minecraft-info" uk-modal>
   <div class="uk-modal-dialog uk-modal-body">
-    <% if current_user.minecraft_username != "" %>
-      <h2 class="uk-modal-title">마인크래프트 정보 변경</h2>
-    <% else %>
+    <% if current_user.minecraft_username.blank? %>
       <h2 class="uk-modal-title">마인크래프트 정보 등록</h2>
+    <% else %>
+      <h2 class="uk-modal-title">마인크래프트 정보 변경</h2>
     <% end %>
     <div>
       <%= form_for '/modify-minecraft', url: {action: 'modify_minecraft'}, html: {class: "toggle-class"} do %>
@@ -75,14 +88,43 @@
     </div>
     <p class="uk-text-right">
       <button class="uk-button uk-button-default uk-modal-close" type="button">취소</button>
-    <% if current_user.minecraft_username != "" %>
-        <%= submit_tag "변경", {class: "uk-button uk-button-primary"} %>
-    <% else %>
+    <% if current_user.minecraft_username.blank? %>
         <%= submit_tag "등록", {class: "uk-button uk-button-primary"} %>
+    <% else %>
+        <%= submit_tag "변경", {class: "uk-button uk-button-primary"} %>
     <% end %>
     </p>
     <% end %>
   </div>
+</div>
+
+<div id="profile-image" uk-modal>
+  <div class="uk-modal-dialog uk-modal-body">
+    <% if current_user.avatar.attached? %>
+      <h2 class="uk-modal-title">프로필 사진 변경</h2>
+    <% else %>
+      <h2 class="uk-modal-title">프로필 사진 등록</h2>
+    <% end %>
+    <div>
+      <%= form_for '/profile-image', url: {action: 'profile_image'}, html: {multipart: true, class: "toggle-class"} do %>
+        <fieldset class="uk-fieldset">
+          <div class="uk-margin-small">
+            <div class="uk-inline uk-width-1-1">
+              <%= file_field_tag :avatar, accept: 'image/png,image/gif,image/jpeg' %>
+            </div>
+          </div>
+        </fieldset>
+        </div>
+        <p class="uk-text-right">
+          <button class="uk-button uk-button-default uk-modal-close" type="button">취소</button>
+          <% if current_user.avatar.attached? %>
+            <%= submit_tag "변경", {class: "uk-button uk-button-primary"} %>
+          <% else %>
+            <%= submit_tag "등록", {class: "uk-button uk-button-primary"} %>
+          <% end %>
+        </p>
+      <% end %>
+      </div>
 </div>
 
 <div id="modify-password" uk-modal>
