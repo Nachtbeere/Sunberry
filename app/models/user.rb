@@ -54,7 +54,7 @@ class User < ApplicationRecord
   def convert_profile_image(profile_image)
     image = MiniMagick::Image.new(profile_image.tempfile.path)
     image.resize "200x200>"
-    profile_image.original_filename = username_hash + extract_extension(profile_image.tempfile.path)
+    profile_image.original_filename = username_hash + User.extract_extension(profile_image.tempfile.path)
     profile_image
   end
 

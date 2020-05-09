@@ -9,7 +9,8 @@ defaults: &DEFAULTS
     name_from_uuid: "user/profiles/" # + <uuid>/names
   purifier_api:
     host:
-      mainline: ""
+      mainline_survival: ""
+      mainline_creative: ""
       nightly: ""
     redis_root: "purifier:"
     version: "v1"
