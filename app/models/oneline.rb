@@ -40,7 +40,7 @@ class Oneline < ApplicationRecord
 
   def self.convert_image(image)
     resize = MiniMagick::Image.new(image.tempfile.path)
-    resize.resize "500x500>"
+    resize.resize "1024x1024>"
     image.original_filename = new_filename(image)
     image
   end
