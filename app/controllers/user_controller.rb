@@ -67,7 +67,7 @@ class UserController < ApplicationController
           email: params[:email],
           password: params[:password],
           password_confirmation: params[:password_confirmation],
-          username: params[:username],
+          username: User.remove_whitelist_like_strings(params[:username]),
           minecraft_username: params[:minecraft_username],
           minecraft_uuid: params[:minecraft_uuid],
           role: User::ROLES[:general],

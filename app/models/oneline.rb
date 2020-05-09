@@ -15,6 +15,8 @@ class Oneline < ApplicationRecord
     latest.nil? ? [] : latest
   end
 
+
+
   def self.duplicated?(author_id, content)
     Oneline.where(created_at: Time.now.utc.to_date.all_day).find_by(user_id: author_id, content: content)
   end

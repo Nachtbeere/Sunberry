@@ -17,9 +17,11 @@ class OnelineController < ApplicationController
     elsif Oneline.attachment_overload?(params[:images])
       redirect_to '/oneline', flash: { alert: '첨부파일이 너무 커요!' }
     else
+      content_sanitized = Oneline.remove_whitelist_like_strings(params[:content]).blank? ? '' : params[:content]
+      puts content_sanitized
       write_at = Time.now
       oneline = Oneline.create(
-        content: params[:content],
+        content: content_sanitized,
         user_id: current_user.id,
         created_at: write_at
       )
