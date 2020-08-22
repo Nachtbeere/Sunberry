@@ -11,7 +11,7 @@ class PagesController < ApplicationController
   private
 
   def allow_iframe
-    url = "http://maps.minecraft.nightly.nachtbeere.net"
+    url = 'https://*.minecraft.' + ADDITIONAL_CONFIG['domain']
     response.headers['X-Frame-Options'] = "ALLOW-FROM #{url}"
     response.headers['Content-Security-Policy'] = "frame-ancestors #{url}"
   end
