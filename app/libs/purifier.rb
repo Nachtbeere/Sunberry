@@ -1,11 +1,20 @@
-class Purifier
+class Purifier < ApplicationJob
+  queue_as :default
+
+  def perform(target_server, endpoint)
+    info = Purifier.request_purifier_server(target_server, endpoint)
+    Purifier.set_purifier_to_redis(target_server, endpoint, info) if info
+  end
+
   def self.get_from_purifier_api(target_server, endpoint)
-    info = get_purifier_from_redis(target_server, endpoint)
-    unless info
-      info = request_purifier_server(target_server, endpoint)
-      set_purifier_to_redis(target_server, endpoint, info) if info
+    cached = get_purifier_from_redis(target_server, endpoint + '#cached')
+    if cached
+      get_purifier_from_redis(target_server, endpoint)
+    else
+      old_cache = get_purifier_from_redis(target_server, endpoint)
+      perform_later target_server, endpoint
+      old_cache
     end
-    info
   end
 
   def self.get_from_mojang_api(endpoint)
@@ -60,7 +69,7 @@ class Purifier
 
   def self.request_endpoint(endpoint)
     '/api/' + ADDITIONAL_CONFIG['purifier_api']['version'] +
-        '/' + endpoint
+      '/' + endpoint
   end
 
   def self.server_request(uri, port)
@@ -82,30 +91,55 @@ class Purifier
               { ex: expire(endpoint) })
   end
 
+  def self.del_purifier_to_redis(target_server, endpoint)
+    REDIS.del(ADDITIONAL_CONFIG['purifier_api']['redis_root'] +
+                  target_server + ':' +
+                  endpoint)
+  end
+
   def self.expire(endpoint)
     if endpoint.include? 'user/'
       30.days.to_i
+    elsif endpoint.include? 'health#cached'
+      30.seconds.to_i
+    elsif endpoint.include? 'pulling'
+      30.seconds.to_i
+    elsif endpoint.include? 'cached'
+      60.seconds.to_i
     else
-      30.seconds.to_i if endpoint.include? 'health'
-      1.minutes.to_i
+      1.months.to_i
     end
   end
 
   def self.request_purifier_server(target_server, endpoint)
-    uri = request_url(target_server, endpoint)
-    resp = server_request(uri.host, uri.port).get(uri.path)
-    JSON.parse(resp.body) if resp.is_a? Net::HTTPSuccess
+    pulling = get_purifier_from_redis(target_server, endpoint + '#pulling')
+    if pulling
+      nil
+    else
+      set_purifier_to_redis(target_server, endpoint + '#pulling',
+                            true)
+      uri = request_url(target_server, endpoint)
+      resp = server_request(uri.host, uri.port).get(uri.path)
+      if resp.is_a? Net::HTTPSuccess
+        del_purifier_to_redis(target_server, endpoint + '#pulling')
+        set_purifier_to_redis(target_server, endpoint + '#cached',
+                              true)
+        JSON.parse(resp.body)
+      end
       # req = server_request(uri.host, uri.port)
       # req.set_debug_output $stderr
       # req_path = Net::HTTP::Get.new(uri.path)
       # resp = req.start do |http|
       #   http.request(req_path)
+    end
   rescue SocketError => e
+    del_purifier_to_redis(target_server, endpoint + '#pulling')
     puts e
     nil
   rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError,
          Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError,
          Errno::EHOSTUNREACH, Errno::ECONNREFUSED => e
+    del_purifier_to_redis(target_server, endpoint + '#pulling')
     puts e
     nil
   end
