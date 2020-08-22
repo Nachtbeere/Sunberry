@@ -1,6 +1,11 @@
 <% content_for :title, "밤딸기 플레이스 - 마인크래프트/지도" %>
 <% breadcrumb :minecraft_maps %>
 <h1>지도</h1>
-<iframe src="<%= ADDITIONAL_CONFIG["minecraft_map_url"] %>" style="display:block; min-height:80vw; width:100%;">
+<ul class="uk-subnav uk-subnav-divider">
+  <li><a href="<%= ADDITIONAL_CONFIG["minecraft_map_url"]["mainline_survival"] %>" target="minecraft_map">Survival</a></li>
+  <li><a href="<%= ADDITIONAL_CONFIG["minecraft_map_url"]["mainline_creative"] %>" target="minecraft_map">Creative</a></li>
+  <li><a href="<%= ADDITIONAL_CONFIG["minecraft_map_url"]["nightly"] %>" target="minecraft_map">Nightly</a></li>
+</ul>
+<iframe src="<%= ADDITIONAL_CONFIG["minecraft_map_url"]["mainline_survival"] %>" name="minecraft_map" style="display:block; min-height:80vw; width:100%;">
   <p>Placeholder text; only shows up if the page DOESN'T render!</p>
 </iframe>
