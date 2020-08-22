@@ -2,7 +2,10 @@ defaults: &DEFAULTS
   domain: ""
   article_categories: ["notice", "general"]
   mailgun_api_key: ""
-  minecraft_map_url: ""
+  minecraft_map_url:
+    mainline_survival: ""
+    mainline_creative: ""
+    nightly: ""
   mojang_api:
     host: "https://api.mojang.com"
     uuid_from_name: "users/profiles/minecraft"
