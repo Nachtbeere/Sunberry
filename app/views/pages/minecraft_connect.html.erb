@@ -15,6 +15,9 @@
               <div>
                 <span class="uk-text-bold uk-text-meta">서바이벌</span>
               </div>
+              <div class="uk-text-bold">
+                <span><%= @health['mainline_survival'] ? @info['mainline_survival']['version'] : '버전 확인 불가' %></span>
+              </div>
               <div class=
                      <% if @health['mainline_survival'] %>
                        "uk-text-bold uk-text-primary">
@@ -40,6 +43,9 @@
             <div class="uk-width-1-2">
               <div>
                 <span class="uk-text-bold uk-text-meta">크리에이티브</span>
+              </div>
+              <div class="uk-text-bold">
+                <span><%= @health['mainline_creative'] ? @info['mainline_creative']['version'] : '버전 확인 불가' %></span>
               </div>
               <div class=
                      <% if @health['mainline_creative'] %>
@@ -74,6 +80,9 @@
         <div class="nightly">
           <h3 class="uk-card-title">테스트 서버</h3>
           <p class="server_url">nightly.nachtbeere.net</p>
+          <div class="uk-text-bold">
+            <span><%= @health['nightly'] ? @info['nightly']['version'] : '버전 확인 불가' %></span>
+          </div>
           <div class=
                  <% if @health['nightly'] %>
                    "uk-text-bold uk-text-primary">
