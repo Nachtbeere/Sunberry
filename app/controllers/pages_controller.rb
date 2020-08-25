@@ -27,7 +27,6 @@ class PagesController < ApplicationController
       @system[s] = Purifier.server_system_info(s)
       if @info[s]&.key?('version')
         @info[s]['version'] = @info[s]['version'].match('(?<=MC: ).*(?=\\))')
-        puts @info[s]['version']
       end
     end
   end
