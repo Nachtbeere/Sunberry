@@ -1,2 +1,101 @@
 <% content_for :title, "밤딸기 플레이스 - 관리 패널" %>
-<%= link_to "test", '/admin/mail-test', method: :post, class: "uk-button uk-button-danger toggle-class" %>
+<%= render partial: 'admin/nav' %>
+<h1>대시보드</h1>
+<h2>서버 현황</h2>
+<div class="uk-child-width-expand@s uk-text-center uk-grid-match" uk-grid>
+  <div class="uk-grid-margin uk-first-column">
+    <div class="uk-card uk-card-default uk-card-body">
+      <div class="server">
+        <div class="minecraft">
+          <h3 class="uk-card-title">Minecraft</h3>
+          <div class="uk-grid-match uk-text-center" uk-grid>
+            <div class="uk-width-1-3">
+              <div>
+                <span class="uk-text-bold uk-text-meta">S</span>
+              </div>
+              <div class=
+                     <% if @health['mainline_survival'] %>
+                       "uk-text-bold uk-text-primary">
+                       <% else %>
+                       "uk-text-bold uk-text-danger">
+                       <% end %>
+                <p><%= @health['mainline_survival'] ? '정상' : '비정상' %></p>
+              </div>
+            </div>
+            <div class="uk-width-1-3">
+              <div>
+                <span class="uk-text-bold uk-text-meta">C</span>
+              </div>
+              <div class=
+                     <% if @health['mainline_creative'] %>
+                       "uk-text-bold uk-text-primary">
+                       <% else %>
+                       "uk-text-bold uk-text-danger">
+                       <% end %>
+                <p><%= @health['mainline_creative'] ? '정상' : '비정상' %></p>
+              </div>
+            </div>
+            <div class="uk-width-1-3">
+              <div>
+                <span class="uk-text-bold uk-text-meta">N</span>
+              </div>
+              <div class=
+                     <% if @health['nightly'] %>
+                       "uk-text-bold uk-text-primary">
+                       <% else %>
+                       "uk-text-bold uk-text-danger">
+                       <% end %>
+                <p><%= @health['nightly'] ? '정상' : '비정상' %></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="uk-grid-margin uk-first-column">
+    <div class="uk-card uk-card-default uk-card-body">
+      <div class="server">
+        <div class="ottd">
+          <h3 class="uk-card-title">Open TTD</h3>
+          <div class="uk-grid-match uk-text-center" uk-grid>
+            <div class="uk-width-1-1">
+              <div class=
+                     <% if @health['openttd'] %>
+                       "uk-text-bold uk-text-primary">
+                       <% else %>
+                       "uk-text-bold uk-text-danger">
+                       <% end %>
+                <p><%= @health['openttd'] ? '정상' : '비정상' %></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="uk-grid-margin uk-first-column">
+    <div class="uk-card uk-card-default uk-card-body">
+      <div class="server">
+        <div class="orct">
+          <h3 class="uk-card-title">Open RCT</h3>
+          <div class="uk-grid-match uk-text-center" uk-grid>
+            <div class="uk-width-1-1">
+              <div class=
+                     <% if @health['openrct'] %>
+                       "uk-text-bold uk-text-primary">
+                       <% else %>
+                       "uk-text-bold uk-text-danger">
+                       <% end %>
+                <p><%= @health['openrct'] ? '정상' : '비정상' %></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
