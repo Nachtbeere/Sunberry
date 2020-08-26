@@ -1,4 +1,5 @@
 <% content_for :title, "밤딸기 플레이스 - 관리 패널/회원 목록" %>
+<%= render partial: 'admin/nav' %>
 <h1>회원 목록</h1>
 <ul class="uk-list uk-list-divider">
   <li>
@@ -30,7 +31,7 @@
   <div class="uk-width-1-3"><%= paginate @users %></div>
   <div class="uk-width-1-3">
     <div class="uk-text-right">
-      temp
+      차단
     </div>
   </div>
 </div>
