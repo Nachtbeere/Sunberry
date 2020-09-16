@@ -30,7 +30,7 @@ class User < ApplicationRecord
     if admin?
       sliced_email[0].capitalize
     else
-      sliced_email[0] + '#' + sliced_email[1][0]
+      Digest::MD5.hexdigest(sliced_email[0] + '#' + sliced_email[1][0])[0, 12]
     end
   end
 
