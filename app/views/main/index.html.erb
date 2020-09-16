@@ -6,7 +6,7 @@
       <% unless @articles_notice.each do |article| %>
         <li>
           <div class="uk-grid">
-            <div class="uk-inline uk-width-expand title"><%=  link_to article.title, "notice/#{article.id}"  %></div>
+            <div class="uk-inline uk-width-expand nowrap-ellipsis"><%=  link_to article.title, "notice/#{article.id}"  %></div>
             <div class="uk-inline uk-width-auto uk-text-meta" style="overflow: hidden"><%=  article.created_at.in_time_zone("Seoul").strftime("%F")  %></div>
           </div>
         </li>
@@ -24,7 +24,7 @@
         <li>
           <div class="uk-grid">
             <div class="uk-inline uk-width-expand title"><%= article.content.truncate(20) %></div>
-            <div class="uk-inline uk-width-xsmall uk-text-meta" style="overflow: hidden"><%=  article.user.username  %></div>
+            <div class="uk-inline uk-width-xsmall uk-text-meta nowrap-ellipsis"><%=  article.user.username  %></div>
           </div>
         </li>
       <%  end  %>
