@@ -84,6 +84,7 @@ body {
 
 .datetime-meta-small {
   font-size: 0.675rem;
+  width: 156px;
 }
 
 span.site_logo {
@@ -140,7 +141,7 @@ p span.do_not_display {
   width: 100px;
 }
 
-.title {
+.nowrap-ellipsis {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
