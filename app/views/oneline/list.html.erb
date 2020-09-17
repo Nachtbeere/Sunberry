@@ -45,7 +45,7 @@
       <div class="uk-grid">
         <div class="uk-width-auto">
           <% if oneline.user.avatar.attached? %>
-            <%= image_tag(image_url(url_for(oneline.user.avatar)), class: "uk-comment-avatar-modified") %>
+            <%= image_tag(image_url(url_for(oneline.user.avatar)), loading: "lazy", class: "uk-comment-avatar-modified") %>
           <% else %>
             <div class="uk-comment-avatar-modified" style="background-color: <%= oneline.user.identity_colour %>" ></div>
           <% end %>
@@ -60,7 +60,7 @@
             <div class="uk-grid-medium uk-child-width-expand@s" uk-grid>
             <% oneline.images.each do |image| %>
             <div class="uk-width-1-2@l uk-width-1-1@m">
-              <%= image_tag(image_url(url_for(image)), class: "uk-card uk-card-default uk-card-body oneline-image-box") %>
+              <%= image_tag(image_url(url_for(image)), loading: "lazy", class: "uk-card uk-card-default uk-card-body oneline-image-box") %>
             </div>
               <% end %>
             </div>
