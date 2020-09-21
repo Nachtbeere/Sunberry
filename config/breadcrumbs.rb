@@ -27,6 +27,11 @@ crumb :about do
   parent :root
 end
 
+crumb :develop do
+  link '개발', (url_for '/develop')
+  parent :about
+end
+
 crumb :oneline do
   link '게시판', (url_for '/oneline')
   parent :about

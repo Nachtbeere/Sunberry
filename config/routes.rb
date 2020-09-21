@@ -52,6 +52,7 @@ Rails.application.routes.draw do
   # statics
   get 'about', to: 'pages#show', page: 'about'
   get 'donation', to: 'pages#show', page: 'donation'
+  get 'develop', to: 'pages#show', page: 'develop'
   get 'terms-of-service', to: 'pages#show', page: 'terms_of_service'
   get 'minecraft', to: 'pages#show', page: 'minecraft_about'
   get 'minecraft/about', to: 'pages#show', page: 'minecraft_about'
