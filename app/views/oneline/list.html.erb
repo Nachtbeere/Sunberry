@@ -5,10 +5,13 @@
   <% if current_user.nil? %>
     <fieldset class="uk-fieldset">
       <div class="uk-margin-small">
-        <div class="uk-inline uk-width-1-1">
-          <span class="uk-form-icon uk-form-icon-flip uk-icon" uk-icon="icon: comment"></span>
-          <textarea placeholder="로그인 해주세요" class="uk-textarea" disabled></textarea>
-        </div>
+          <div class="uk-inline uk-width-1-1">
+            <a class="link-cover" href="<%= url_for '/sign-in' %>">
+              <div></div>
+            </a>
+            <span class="uk-form-icon uk-form-icon-flip uk-icon" uk-icon="icon: comment"></span>
+            <textarea placeholder="로그인 해주세요" class="uk-textarea" disabled></textarea>
+          </div>
       </div>
       <div class="uk-text-right">
         <button class="uk-button uk-button-primary" disabled>작성</button>
