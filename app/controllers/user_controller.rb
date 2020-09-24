@@ -166,10 +166,8 @@ class UserController < ApplicationController
     if user
       REDIS.set('password:' + user.confirmation_token, user.id.to_s)
       UserMailer.with(user: user, token: user.confirmation_token, root_url: root_url).password_reset_email.deliver_later
-      redirect_to '/', flash: { info: '비밀번호 재설정 메일을 보냈습니다' }
-    else
-      redirect_to '/', flash: { info: '존재하지 않는 계정입니다' }
     end
+    redirect_to '/', flash: { info: '비밀번호 재설정 메일을 보냈습니다' }
   end
 
   def password_reset_page
