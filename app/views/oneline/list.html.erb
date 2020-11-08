@@ -43,7 +43,7 @@
 
 <ul class="uk-list uk-list-divider">
   <% unless @onelines.each do |oneline| %>
-    <li>
+    <li id="oneline-article-<%= oneline.id %>">
     <article class="uk-comment">
       <div class="uk-grid">
         <div class="uk-width-auto">
@@ -89,6 +89,27 @@
 </div>
 
 <script type="text/javascript">
+  /** jump to designated article if URL includes article ID */
+  (function () {
+    var articleId = null;
+    if (location.search != null) {
+      articleId = location.search.split('article_id=')[1];
+    }
+    if (articleId == null) {
+      return;
+    }
+    setTimeout(() => {
+      const el = document.getElementById('oneline-article-' + articleId.toString());
+      if (el) {
+        el.scrollIntoView({
+          behavior: "auto", block: "center", inline: "center"
+        });
+        el.classList.add('highlight');
+      }
+    }, 0)
+  })();
+
+  /** Open a full size image view model when thumbnail is clicked */
   var payload = null;
   UIkit.util.on('.attached-image-modal-opener', 'click', function (e) {
     e.preventDefault();
