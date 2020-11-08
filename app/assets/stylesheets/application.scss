@@ -179,3 +179,12 @@ p span.do_not_display {
   justify-content: space-between;
   align-items: flex-end;
 }
+
+iframe[name='minecraft_map'] {
+  display: block;
+  width: 100vw;
+  position: relative;
+  left: calc((100vw - 100%) / -2);
+  height: calc(100vh - 250px - 80px);
+  min-height: 600px;
+}
