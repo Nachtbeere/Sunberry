@@ -23,7 +23,7 @@
       <% unless @onelines.each do |article| %>
         <li>
           <div class="uk-grid">
-            <div class="uk-inline uk-width-expand title"><%= article.content.truncate(20) %></div>
+            <div class="uk-inline uk-width-expand title"><%= link_to article.content, "oneline?article_id=#{article.id}" %></div>
             <div class="uk-inline uk-width-xsmall uk-text-meta nowrap-ellipsis"><%=  article.user.username  %></div>
           </div>
         </li>

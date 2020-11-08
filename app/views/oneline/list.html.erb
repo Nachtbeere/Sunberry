@@ -43,7 +43,7 @@
 
 <ul class="uk-list uk-list-divider">
   <% unless @onelines.each do |oneline| %>
-    <li>
+    <li id="oneline-article-<%= oneline.id %>">
     <article class="uk-comment">
       <div class="uk-grid">
         <div class="uk-width-auto">
@@ -80,3 +80,24 @@
   <div class="uk-width-1-3@m"><%= paginate @onelines %></div>
   <div class="uk-width-1-3@m uk-width-small@s"></div>
 </div>
+
+<script type="text/javascript">
+  (function () {
+    var articleId = null;
+    if (location.search != null) {
+      articleId = location.search.split('article_id=')[1];
+    }
+    if (articleId == null) {
+      return;
+    }
+    setTimeout(() => {
+      const el = document.getElementById('oneline-article-' + articleId.toString());
+      if (el) {
+        el.scrollIntoView({
+          behavior: "auto", block: "center", inline: "center"
+        });
+        el.classList.add('highlight');
+      }
+    }, 0)
+  })();
+</script>

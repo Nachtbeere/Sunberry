@@ -46,3 +46,13 @@ img.oneline-image-box {
   left: 0;
   z-index: 1;
 }
+
+$highlight-bg: #fbf2d4;
+.highlight {
+  background-color: $highlight-bg;
+  animation: 3s ease-out 0s normal forwards running highlight;
+}
+@keyframes highlight {
+  from { background-color: $highlight-bg; }
+  to { background-color: transparent; }
+}
