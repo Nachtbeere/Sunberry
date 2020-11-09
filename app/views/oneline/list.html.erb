@@ -62,7 +62,7 @@
           <% if oneline.images.attached? %>
             <div class="uk-grid-medium uk-child-width-expand@s" uk-grid>
             <% oneline.images.each do |image| %>
-            <a class="uk-width-1-2@l uk-width-1-1@m attached-image-modal-opener" data-image-src="<% image_url(url_for(image)) %>">
+            <a class="uk-width-1-2@l uk-width-1-1@m attached-image-modal-opener" data-image-src="<%= image_url(url_for(image)) %>">
               <%= image_tag(image_url(url_for(image)), loading: "lazy", class: "uk-card uk-card-default uk-card-body oneline-image-box") %>
             </a>
               <% end %>
@@ -113,8 +113,8 @@
   var payload = null;
   UIkit.util.on('.attached-image-modal-opener', 'click', function (e) {
     e.preventDefault();
-    e.target.blur();
-    payload = e.target.dataset.imageSrc;
+    e.currentTarget.blur();
+    payload = e.currentTarget.dataset.imageSrc;
     if (payload != null) {
       UIkit.modal('#attached-image-modal').show();
     }
