@@ -47,15 +47,23 @@
     <article class="uk-comment">
       <div class="uk-grid">
         <div class="uk-width-auto">
-          <% if oneline.user.avatar.attached? %>
-            <%= image_tag(image_url(url_for(oneline.user.avatar)), loading: "lazy", class: "uk-comment-avatar-modified") %>
+          <% if oneline.user.nil? %>
+            <div class="uk-comment-avatar-modified" style="background-color: #000000" ></div>
           <% else %>
-            <div class="uk-comment-avatar-modified" style="background-color: <%= oneline.user.identity_colour %>" ></div>
-          <% end %>
+              <% if oneline.user.avatar.attached? %>
+                <%= image_tag(image_url(url_for(oneline.user.avatar)), loading: "lazy", class: "uk-comment-avatar-modified") %>
+              <% else %>
+                <div class="uk-comment-avatar-modified" style="background-color: <%= oneline.user.identity_colour %>" ></div>
+              <% end %>
+            <% end %>
         </div>
         <div class="uk-width-expand uk-padding-remove-left">
           <header class="uk-comment-header-oneline uk-grid uk-padding-remove uk-grid">
-            <div class="uk-width-expand uk-inline uk-comment-title-modified uk-width-oneline-username uk-text-bold uk-text-middle"><%= oneline.user.username_identity %></div>
+            <% if oneline.user.nil? %>
+              <div class="uk-width-expand uk-inline uk-comment-title-modified uk-width-oneline-username uk-text-bold uk-text-middle">탈퇴한 유저</div>
+            <% else %>
+              <div class="uk-width-expand uk-inline uk-comment-title-modified uk-width-oneline-username uk-text-bold uk-text-middle"><%= oneline.user.username_identity %></div>
+            <% end %>
             <div class="uk-text-right uk-padding-remove-left uk-inline uk-comment-meta-modified uk-width-oneline-datetime uk-text-middle"><%= oneline.created_at.in_time_zone("Seoul").strftime("%F %T") %></div>
           </header>
           <div class="uk-comment-body"><%= oneline.content %></div>
