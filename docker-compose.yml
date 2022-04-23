@@ -2,7 +2,7 @@ version: '3'
 
 services:
   sunberry-db:
-    image: bitnami/postgresql
+    image: bitnami/postgresql:11
     volumes:
       - ./docker/data/db:/bitnami/postgresql
     environment:
